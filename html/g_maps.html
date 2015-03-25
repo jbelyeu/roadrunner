@@ -84,7 +84,7 @@
           var lng = event.latLng.lng();
           console.log("Lat=" + lat + "; Lng=" + lng);
 
-	  points.push({lat, lng});
+	  points.push([lat, lng]);
         });
 
          google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
@@ -109,8 +109,8 @@
     <script>
       $(document).ready(function(){
         $("#gps_btn").click(function() {
-          console.log("Lat:\t" + latit);
-          console.log("Lon:\t" + longit);
+          console.log("Center Lat:\t" + latit);
+          console.log("Center Lng:\t" + longit);
 
           newLocation(latit, longit);  
        });
@@ -118,6 +118,8 @@
        
        $("#points").click(function() {
           for(i = 0; i < points.length; i++)
+             console.log("here3");
+	     
              console.log(points[i]);
        });
        
