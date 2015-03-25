@@ -10,6 +10,7 @@ app.use('/', express.static('./html', {maxAge: 60*60*1000}));
 app.use(bodyParser());
 var mongoClient = require ("mongodb").MongoClient;
 
+
 var auth = basicAuth(function(user, pass) 
 {
 	return((user ==='cs360')&&(pass === 'test'));
