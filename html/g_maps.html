@@ -83,6 +83,8 @@
           var lat = event.latLng.lat();
           var lng = event.latLng.lng();
           console.log("Lat=" + lat + "; Lng=" + lng);
+
+	  points.push({lat, lng});
         });
 
          google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
@@ -131,6 +133,7 @@
     <div id="map-canvas"></div>
     <button id="gps_btn">Relocate</button>
     <button id="points">Print Points</button>
+    <button id="calc_route">Calculate Route</button>
   </body>
 
 
