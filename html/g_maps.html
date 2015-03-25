@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>RoadRunner Google Map Test</title>
+  </head>
+
+  <head>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 75%; margin: 100; padding: 0}
+          #map-canvas { height: 100% }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+      function geoFindMe() {
+
+      latit = 0.0;
+      longit = 0.0;
+      map = null;
+
+      //playing
+      points = [];
+
+        var output = document.getElementById("out");
+
+        if (!navigator.geolocation) {
+          console.log("<p>Geolocation is not supported by your browser</p>");
+          return;
+        }
+
+        function success(position) {
+          var latitude  = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          console.log("here");
+
+          latit = latitude;
+          longit = longitude;
+
+          console.log(latit);
+          console.log(longit);
+        };
+
+        function error() {
+          console.log("Unable to retrieve your location");
+        };
+
+        //output.innerHTML = "<p>Locating…</p>";
+
+        navigator.geolocation.getCurrentPosition(success, error);
+
+        return(success);
+      }
+    </script>
+
+
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58">
+    </script>
+
+<!----------------------Google Script----------------------->
+    <script type="text/javascript">
+      //var map;
+      function initialize() {
+        
+        var coor = geoFindMe();
+        console.log(window.latit);
+
+
+        var mapOptions = {
+          center: { lat: 39.50, lng: -98.35},
+          zoom: 4
+        };
+
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        
+        //=====Events=====
+        google.maps.event.addListener(map, "click", function(event) {
+          console.log("here2");
+          
+          var lat = event.latLng.lat();
+          var lng = event.latLng.lng();
+          console.log("Lat=" + lat + "; Lng=" + lng);
+        });
+
+         google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
+        //================
+      }
+      
+      
+      function newLocation(newLat, newLng) {
+        map.setCenter({
+          lat : newLat,
+          lng : newLng
+        });
+
+        map.setZoom(14);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+<!------------------------------------------------------------->
+
+<!----------------------Document Script----------------------->
+    <script>
+      $(document).ready(function(){
+        $("#gps_btn").click(function() {
+          console.log("Lat:\t" + latit);
+          console.log("Lon:\t" + longit);
+
+          newLocation(latit, longit);  
+       });
+       
+       
+       $("#points").click(function() {
+          for(i = 0; i < points.length; i++)
+             console.log(points[i]);
+       });
+       
+    });
+    </script>
+<!------------------------------------------------------------->
+  </head>
+
+
+
+
+  <body>
+    <div id="map-canvas"></div>
+    <button id="gps_btn">Relocate</button>
+    <button id="points">Print Points</button>
+  </body>
+
+
+
+</html>
