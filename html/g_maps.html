@@ -22,6 +22,7 @@
 
       //playing
       points = [];
+      directionsService = null; //= new google.maps.DirectionService();
 
         var output = document.getElementById("out");
 
@@ -78,7 +79,6 @@
         
         //=====Events=====
         google.maps.event.addListener(map, "click", function(event) {
-          console.log("here2");
           
           var lat = event.latLng.lat();
           var lng = event.latLng.lng();
@@ -87,7 +87,9 @@
 	  points.push([lat, lng]);
         });
 
-         google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
+        directionsService = new google.maps.DirectionsService();
+
+        google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
         //================
       }
       
@@ -117,11 +119,34 @@
        
        
        $("#points").click(function() {
-          for(i = 0; i < points.length; i++)
-             console.log("here3");
-	     
+          console.log("printing points");
+
+	  for(i = 0; i < points.length; i++)
              console.log(points[i]);
        });
+
+       $("#calc_route").click(function() {
+          console.log("calculating route...");
+	  
+	  request = {
+             origin:"Provo, UT",
+	     destination:"Orem, UT",
+	     waypoints: [],
+	     provideRouteAlternatives: true,
+	     travelMode: google.maps.TravelMode.DRIVING
+	     //unitSystem: google.maps.UnitSystem.IMPERIAL
+	  };
+
+          directionsService.route(request, function(response, status) {
+	     if(status == google.maps.DirectionsStatus.OK) {
+                console.log("SUCCESS!");
+                console.log(response);
+	     }
+	  });
+
+       });
+
+
        
     });
     </script>
