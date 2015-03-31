@@ -15,15 +15,12 @@
 <!----------------------Geolocator------------------------------->
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript">
+
+      //variables
+      var latit = 0.0;
+      var longit = 0.0;
+
       function geoFindMe() {
-
-      latit = 0.0;
-      longit = 0.0;
-      map = null;
-
-      //playing
-      points = [];
-      directionsService = null; //= new google.maps.DirectionService();
 
         var output = document.getElementById("out");
 
@@ -56,21 +53,30 @@
         return(success);
       }
     </script>
-
-
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58">
-    </script>
+    
 <!------------------------------------------------------------->
 
-<!----------------------Google Script----------------------->
+
+
+
+<!----------------------Google Map----------------------->
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58"></script>
     <script type="text/javascript">
-      //var map;
+
+      var points = [];
+      var directionsDisplay;
+      var directionsService;
+      var map;
+
+
       function initialize() {
         
         var coor = geoFindMe();
         console.log(window.latit);
 
+	directionsDisplay = new google.maps.DirectionsRenderer();
+	directionsService = new google.maps.DirectionsService();
 
         var mapOptions = {
           center: { lat: 39.50, lng: -98.35},
@@ -80,6 +86,8 @@
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         
         //=====Events=====
+        directionsDisplay.setMap(map);
+     	
         google.maps.event.addListener(map, "click", function(event) {
           
           var lat = event.latLng.lat();
@@ -88,14 +96,11 @@
 
 	  points.push([lat, lng]);
         });
-
-        directionsService = new google.maps.DirectionsService();
-
+	
         google.maps.event.addListener(document.getElementById('gps_btn'), 'click', function () {});
         //================
       }
-      
-      
+
       function newLocation(newLat, newLng) {
         map.setCenter({
           lat : newLat,
@@ -108,6 +113,10 @@
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 <!------------------------------------------------------------->
+
+
+
+
 
 <!----------------------Document Script----------------------->
     <script>
@@ -143,6 +152,8 @@
 	     if(status == google.maps.DirectionsStatus.OK) {
                 console.log("SUCCESS!");
                 console.log(response);
+
+		directionsDisplay.setDirections(response);
 	     }
 	  });
 
