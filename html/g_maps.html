@@ -136,28 +136,59 @@
              console.log(points[i]);
        });
 
+       $("cl_pts").click(function() {
+          points = [];
+       });
+
        $("#calc_route").click(function() {
           console.log("calculating route...");
 	  
-	  request = {
+	  /*request = {
              origin:"Provo, UT",
 	     destination:"Orem, UT",
 	     waypoints: [],
 	     provideRouteAlternatives: true,
 	     travelMode: google.maps.TravelMode.DRIVING
 	     //unitSystem: google.maps.UnitSystem.IMPERIAL
-	  };
+	  };*/
 
-          directionsService.route(request, function(response, status) {
+	  waypts = [];
+	  for(var i = 0; i < points.length; i++) {
+             waypts.push({
+	        location:new google.maps.LatLng(points[i][0], points[i][1]),
+		stopover:true});
+	  }
+	  console.log(waypts);
+	  waypts_request = {
+             origin: new google.maps.LatLng(latit, longit),
+	     destination: new google.maps.LatLng(latit, longit),
+	     waypoints: waypts,
+	     //optimizeWaypoints: true,
+	     travelMode: google.maps.TravelMode.DRIVING
+	  };
+          directionsService.route(waypts_request, function(response, status) {
+	     if(status == google.maps.DirectionsStatus.OK) {
+                console.log("SUCCESS!");
+		console.log(response);
+
+		directionsDisplay.setDirections(response);
+	     }
+	  });
+          
+	  
+          /*directionsService.route(request, function(response, status) {
 	     if(status == google.maps.DirectionsStatus.OK) {
                 console.log("SUCCESS!");
                 console.log(response);
 
 		directionsDisplay.setDirections(response);
 	     }
-	  });
+	  });*/
 
        });
+
+
+
 
 
        
@@ -174,6 +205,7 @@
     <button id="gps_btn">Relocate</button>
     <button id="points">Print Points</button>
     <button id="calc_route">Calculate Route</button>
+    <button id='cl_pts'>Clear Points</button>
   </body>
 
 
