@@ -64,7 +64,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58"></script>
     <script type="text/javascript">
 
-      var points = [];
+      //var points = [];
+      var route = [];
       var directionsDisplay;
       var directionsService;
       var map;
@@ -97,7 +98,12 @@
           var lng = event.latLng.lng();
           console.log("Lat=" + lat + "; Lng=" + lng);
 
-	  points.push([lat, lng]);
+
+
+
+
+	  //points.push([lat, lng]);
+	  route.push(new google.maps.LatLng(lat, lng));
         });
 	
 	google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
@@ -116,6 +122,17 @@
         }
         total = total / 1000.0;
         document.getElementById('total').innerHTML = total + ' km';
+
+	updatePoints(myroute);
+      }
+
+      function updatePoints(myroute) {
+        console.log("***update points***");
+
+        for (var i = 0; i < myroute.legs.length; i++) {//same as above
+          route[i] = myroute.legs[i].start_location;
+	}
+
       }
 
 
@@ -156,14 +173,17 @@
        $("#points").click(function() {
           console.log("printing points");
 
-	  for(i = 0; i < points.length; i++)
-             console.log(points[i]);
+	  //for(i = 0; i < points.length; i++)
+          //   console.log(points[i]);
+	  for(i = 0; i < route.length; i++)
+	    console.log(route[i]);
        });
 
        $("#cl_pts").click(function() {
           console.log("clearing points");
 	  
-	  points.length = 0;
+	  //points.length = 0;
+          route.length = 0;
 
 	  newLocation(latit, longit);
        });
@@ -172,10 +192,12 @@
           console.log("calculating route...");
 	  
 	  waypts = [];
-	  for(var i = 0; i < points.length; i++) {
+	  //for(var i = 0; i < points.length; i++) {
+	  for(var i = 0; i < route.length; i++) {
              waypts.push({
-	        location:new google.maps.LatLng(points[i][0], points[i][1]),
-		stopover:true});
+	        //location: new google.maps.LatLng(points[i][0], points[i][1]),
+		location: route[i],
+		stopover: true});
 	  }
 	  console.log(waypts);
 	  waypts_request = {
