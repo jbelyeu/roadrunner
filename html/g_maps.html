@@ -17,8 +17,8 @@
     <script type="text/javascript">
 
       //variables
-      var latit = 0.0;
-      var longit = 0.0;
+      var gps_lat = 0.0;
+      var gps_lng = 0.0;
 
       function geoFindMe() {
 
@@ -33,20 +33,16 @@
           var latitude  = position.coords.latitude;
           var longitude = position.coords.longitude;
 
-          console.log("here");
+          gps_lat = latitude;
+          gps_lng = longitude;
 
-          latit = latitude;
-          longit = longitude;
-
-          console.log(latit);
-          console.log(longit);
+          console.log(gps_lat);
+          console.log(gps_lng);
         };
 
         function error() {
           console.log("Unable to retrieve your location");
         };
-
-        //output.innerHTML = "<p>Locating…</p>";
 
         navigator.geolocation.getCurrentPosition(success, error);
 
@@ -64,7 +60,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58"></script>
     <script type="text/javascript">
 
-      //var points = [];
       var route = [];
       var directionsDisplay;
       var directionsService;
@@ -74,7 +69,6 @@
       function initialize() {
         
         var coor = geoFindMe();
-        console.log(window.latit);
         
 	var rendererOptions = {
 	  draggable: true
@@ -97,12 +91,7 @@
           var lat = event.latLng.lat();
           var lng = event.latLng.lng();
           console.log("Lat=" + lat + "; Lng=" + lng);
-
-
-
-
-
-	  //points.push([lat, lng]);
+	  
 	  route.push(new google.maps.LatLng(lat, lng));
         });
 	
@@ -115,26 +104,24 @@
       }
       
       function computeTotalDistance(result) {
-        var total = 0;
+        //ERROR! When there are too many points I can't seem to get the route to work corretly.
+	//		*This is because you are limited to only 8 total waypoints (i.e. route.length <= 8)
+
+	var total = 0;
         var myroute = result.routes[0];
-        for (var i = 0; i < myroute.legs.length; i++) {
+        for (i = 0; i < myroute.legs.length; i++) {
+	  //calc distance
           total += myroute.legs[i].distance.value;
+	  //update route
+	  if(i > 0) {
+	    route[i-1] = myroute.legs[i].start_location;
+	  }
         }
+
         total = total / 1000.0;
         document.getElementById('total').innerHTML = total + ' km';
 
-	updatePoints(myroute);
       }
-
-      function updatePoints(myroute) {
-        console.log("***update points***");
-
-        for (var i = 0; i < myroute.legs.length; i++) {//same as above
-          route[i] = myroute.legs[i].start_location;
-	}
-
-      }
-
 
       function newLocation(newLat, newLng) {
         map.setCenter({
@@ -163,18 +150,16 @@
     <script>
       $(document).ready(function(){
         $("#gps_btn").click(function() {
-          console.log("Center Lat:\t" + latit);
-          console.log("Center Lng:\t" + longit);
+          console.log("Center Lat:\t" + gps_lat);
+          console.log("Center Lng:\t" + gps_lng);
 
-          newLocation(latit, longit);  
+          newLocation(gps_lat, gps_lng);  
        });
        
        
        $("#points").click(function() {
           console.log("printing points");
 
-	  //for(i = 0; i < points.length; i++)
-          //   console.log(points[i]);
 	  for(i = 0; i < route.length; i++)
 	    console.log(route[i]);
        });
@@ -182,27 +167,24 @@
        $("#cl_pts").click(function() {
           console.log("clearing points");
 	  
-	  //points.length = 0;
           route.length = 0;
 
-	  newLocation(latit, longit);
+	  newLocation(gps_lat, gps_lng);
        });
 
        $("#calc_route").click(function() {
           console.log("calculating route...");
 	  
 	  waypts = [];
-	  //for(var i = 0; i < points.length; i++) {
 	  for(var i = 0; i < route.length; i++) {
              waypts.push({
-	        //location: new google.maps.LatLng(points[i][0], points[i][1]),
 		location: route[i],
 		stopover: true});
 	  }
 	  console.log(waypts);
 	  waypts_request = {
-             origin: new google.maps.LatLng(latit, longit),
-	     destination: new google.maps.LatLng(latit, longit),
+             origin: new google.maps.LatLng(gps_lat, gps_lng),
+	     destination: new google.maps.LatLng(gps_lat, gps_lng),
 	     waypoints: waypts,
 	     optimizeWaypoints: true,
 	     provideRouteAlternatives: true,//false
@@ -217,9 +199,6 @@
 		directionsDisplay.setDirections(response);
 
 		//=========analyzing the response=======
-		//if(response.routes.length != 1) {
-		//   console.log("MORE THAN ONE ROUTE");
-		//}
 		if(response.routes.length == 1) {
 		   console.log("***only one route***");
 		}
@@ -239,24 +218,7 @@
 		//======================================
 	     }
 	  });
-          
-	  
-          /*directionsService.route(request, function(response, status) {
-	     if(status == google.maps.DirectionsStatus.OK) {
-                console.log("SUCCESS!");
-                console.log(response);
-
-		directionsDisplay.setDirections(response);
-	     }
-	  });*/
-
        });
-
-
-
-
-
-       
     });
     </script>
 <!------------------------------------------------------------->
