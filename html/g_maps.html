@@ -136,8 +136,12 @@
              console.log(points[i]);
        });
 
-       $("cl_pts").click(function() {
-          points = [];
+       $("#cl_pts").click(function() {
+          console.log("clearing points");
+	  
+	  points.length = 0;
+
+	  newLocation(latit, longit);
        });
 
        $("#calc_route").click(function() {
@@ -163,7 +167,9 @@
              origin: new google.maps.LatLng(latit, longit),
 	     destination: new google.maps.LatLng(latit, longit),
 	     waypoints: waypts,
-	     //optimizeWaypoints: true,
+	     optimizeWaypoints: true,
+	     provideRouteAlternatives: true,//false
+	     avoidHighways: true,
 	     travelMode: google.maps.TravelMode.DRIVING
 	  };
           directionsService.route(waypts_request, function(response, status) {
@@ -172,6 +178,28 @@
 		console.log(response);
 
 		directionsDisplay.setDirections(response);
+
+		//=========analyzing the response=======
+		//if(response.routes.length != 1) {
+		//   console.log("MORE THAN ONE ROUTE");
+		//}
+		if(response.routes.length == 1) {
+		   console.log("***only one route***");
+		}
+                
+		if(response.routes[0].legs.length > 0) {
+		   console.log("more than one leg");
+		}
+                
+                var tot_dist = 0;
+		for(var i = 0; i < response.routes[0].legs.length; i++) {
+                   tot_dist += response.routes[0].legs[i].distance.value;
+		}
+		console.log("total distance = " + tot_dist + " meters");
+
+                var dist = response.routes[0].legs[0].distance.value;
+		console.log("basic distance = " + dist);
+		//======================================
 	     }
 	  });
           
