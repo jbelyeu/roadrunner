@@ -61,6 +61,7 @@
 
     <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&amp;libraries=places"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false&amp;libraries=places;key=AIzaSyCy3YO5XqQz5JGamQkKFo2n-6eOpqVcF58"></script>-->
 
     <script type="text/javascript">
 
@@ -68,6 +69,7 @@
       var directionsDisplay;
       var directionsService;
       var map;
+      var route_result;
 
 
       function initialize() {
@@ -83,7 +85,8 @@
 
         var mapOptions = {
           center: { lat: 39.50, lng: -98.35},
-          zoom: 4
+          zoom: 4,
+          draggableCursor: 'crosshair'
         };
 
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -117,41 +120,50 @@
 	});
      	
         google.maps.event.addListener(map, "click", function(event) {
-          
-          var lat = event.latLng.lat();
-          var lng = event.latLng.lng();
-          console.log("Lat=" + lat + "; Lng=" + lng);
+        
+	  if(route.length < 8) {
+            var lat = event.latLng.lat();
+            var lng = event.latLng.lng();
+            console.log("Lat=" + lat + "; Lng=" + lng);
 	  
-	  route.push(new google.maps.LatLng(lat, lng));
+	    route.push(new google.maps.LatLng(lat, lng));
 
-	  calculateRoute();
+	    calculateRoute();
+	  } else {
+            //do something?
+	  }
         });
 
 	google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
-	  computeTotalDistance(directionsDisplay.getDirections());
+	  route_result = directionsDisplay.getDirections()
+	  computeTotalDistance();
 	});
 
         //================
       }
       
-      function computeTotalDistance(result) {
-        //ERROR! When there are too many points I can't seem to get the route to work corretly.
-	//		*This is because you are limited to only 8 total waypoints (i.e. route.length <= 8)
+      function computeTotalDistance() {
 
-	var total = 0;
-        var myroute = result.routes[0];
+	var dist = 0;
+	var myroute = route_result.routes[0];
         for (i = 0; i < myroute.legs.length; i++) {
           
-	  total += myroute.legs[i].distance.value; //calc total distance
+	  dist += myroute.legs[i].distance.value; //calc total distance
 	  
 	  if(i > 0) {
 	    route[i-1] = myroute.legs[i].start_location; //update route waypoint information
 	  }
         }
 
-        total = total / 1000.0;
-        document.getElementById('total').innerHTML = total + ' km';
+        dist = dist / 1000.0;
 
+	if(document.getElementById('dist_sys').value === 'metric') {
+          document.getElementById('total').innerHTML = dist + ' km';
+	} else {
+	  dist = dist * .621371;
+	  dist = dist.toFixed(3);
+	  document.getElementById('total').innerHTML = dist + ' mi';
+	}
       }
 
       function newLocation(newLat, newLng) {
@@ -198,25 +210,7 @@
               console.log(response);
 
 	      directionsDisplay.setDirections(response);
-	      
-	      //=========analyzing the response=======
-	      if(response.routes.length == 1) {
-		 console.log("***only one route***");
-              }
-                
-	      if(response.routes[0].legs.length > 0) {
-		 console.log("more than one leg");
-              }
-                
-              var tot_dist = 0;
-	      for(var i = 0; i < response.routes[0].legs.length; i++) {
-                 tot_dist += response.routes[0].legs[i].distance.value;
-	      }
-	      console.log("total distance = " + tot_dist + " meters");
 
-              var dist = response.routes[0].legs[0].distance.value;
-	      console.log("basic distance = " + dist);
-	     //======================================
 	  }
         });
       }
@@ -233,21 +227,6 @@
     <script>
 
       $(document).ready(function(){
-
-        /*$("#gps_btn").click(function() {
-          console.log("Center Lat:\t" + gps_lat);
-          console.log("Center Lng:\t" + gps_lng);
-
-          newLocation(gps_lat, gps_lng);  
-       });
-       
-       
-       $("#points").click(function() {
-          console.log("printing points");
-
-	  for(i = 0; i < route.length; i++)
-	    console.log(route[i]);
-       });*/
 
        $("#cl_pts").click(function() {
           console.log("clearing points");
@@ -266,7 +245,6 @@
 
        $("#addr_btn").click(function(e) {
           e.preventDefault();
-          //var addr = $("#addr_form").value;
 	  var addr = document.forms["addr_form"].addr_val.value;
 	  console.log(addr);
          
@@ -293,18 +271,15 @@
 
   <body>
     <div id="map-canvas"></div>
-    <!--<button id="gps_btn">Relocate</button>-->
-    <!--<button id="points">Print Points</button>-->
     <button id="calc_route">Reset Route</button>
     <button id='cl_pts'>Clear Points</button>
-    <p>Total Distance: <span id="total"></span></p>
+    <p>Total Distance: <span id="total"></span><br>
+      <select id='dist_sys' onchange="computeTotalDistance();">
+        <option value='metric'>Metric</option>
+	<option value='imperial'>Imperial</option>
+      </select>
+    </p>
     <p>Route Type (circut or course): <span id="type"></span></p>
-    <form id="addr_form">Input Address:<br>
-      <input type="text" name="address" id="addr_val">
-      <button id="addr_btn">Go To Address</button>
-    </form>
-    <p><span id="addr_warn"></span></p>
-
     <div id="search-panel">
       <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     </div>
