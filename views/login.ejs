@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+	<title>Account</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<link href='/images/mainLogo.png' rel='icon' type='image/ico' />
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<link href="/stylesheets/font-awesome.css" rel="stylesheet" />
+	<link href="/stylesheets/main.css" rel="stylesheet"/>
+	<link href="/stylesheets/_bootmetro.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro-icons.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro-responsive.css" rel="stylesheet"/>
+	<link href="/stylesheets/registration.css" rel="stylesheet"/>
+	<link href="/stylesheets/rrweb.css" rel="stylesheet"/>
+
+	<script src="/javascripts/modernizr-2.6.2-respond-1.1.0.js"></script>
+	<script src="/javascripts/angular.js"></script>
+	<script src="/javascripts/angular-resource.js"></script>
+	<script src="/javascripts/app.js"></script>
+	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+	<script src="/javascripts/app.js"></script>
+</head>
+<body>
+	<div ng-app="rrWebsiteApp" class="ng-scope">
+		<div class="container" ng-controller="loginCtrl">
+			<div class="row">
+				<div class="span8 offset2 login_box">
+					<div class="loginheader"></div>
+					<div class="span offset2" style="padding-top: 50px; padding-bottom: 0px; width: 274px;">
+						<form ng-submit="validateUser()">
+							<div class="form-horizontal" style="vertical-align: middle;">
+									<label style="margin-top: 20px; margin-bottom: 0px;" class="ng-binding">Username (Email)</label>
+									<input type="text" style="width: 100%;" id="username" placeholder="Username" ng-model="Username"></input>
+									<label style="margin-top: 10px; margin-bottom: 0px; " class="ng-binding">Password</label>
+									<input type="password" style="width: 100%;" id='password' placeholder="Password" ng-show="showpassword" ng-model="Password"></input>
+							</div>
+							<div style="margin-top: 35px">
+								<button class="btn-login-primary btn-block" style="font-style: normal; font-size: 20px;" type="submit">Sign in</button>
+							</div>
+						</form>
+						<div style="margin-top: 30px; margin-left: 95px;">
+							<i class="fa-chevron-circle-up" ng-click="singupClick()" style="cursor: pointer;">Sing up</i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
