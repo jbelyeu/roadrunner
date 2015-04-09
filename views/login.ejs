@@ -7,7 +7,7 @@
 	<title>Account</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
-	<link href='/images/mainLogo.png' rel='icon' type='image/ico' />
+	<link href='/images/R.png' rel='icon' type='image/ico' />
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<link href="/stylesheets/font-awesome.css" rel="stylesheet" />
@@ -25,34 +25,41 @@
 	<script src="/javascripts/app.js"></script>
 	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
 
-	<script src="/javascripts/app.js"></script>
 </head>
-<body>
-	<div ng-app="rrWebsiteApp" class="ng-scope">
-		<div class="container" ng-controller="loginCtrl">
+<body ng-app='rrWebsiteApp' style="overflow-x: scroll; overflow-y: scroll;">
+	<div class="ng-scope">
+		<div class="container" ng-controller="LoginCtrl">
 			<div class="row">
 				<div class="span8 offset2 login_box">
-					<div class="loginheader"></div>
+					<a href='/'><div class="loginheader"></div></a>
 					<div class="span offset2" style="padding-top: 50px; padding-bottom: 0px; width: 274px;">
 						<form ng-submit="validateUser()">
 							<div class="form-horizontal" style="vertical-align: middle;">
-									<label style="margin-top: 20px; margin-bottom: 0px;" class="ng-binding">Username (Email)</label>
-									<input type="text" style="width: 100%;" id="username" placeholder="Username" ng-model="Username"></input>
+									<label style="margin-top: 20px; margin-bottom: 0px;" class="ng-binding">Username</label>
+									<input type="text" style="width: 100%;" id="username" placeholder="Username" ng-model="username"></input>
 									<label style="margin-top: 10px; margin-bottom: 0px; " class="ng-binding">Password</label>
-									<input type="password" style="width: 100%;" id='password' placeholder="Password" ng-show="showpassword" ng-model="Password"></input>
+									<input type="password" style="width: 100%;" id='password' placeholder="Password"  ng-model="password"></input>
 							</div>
 							<div style="margin-top: 35px">
 								<button class="btn-login-primary btn-block" style="font-style: normal; font-size: 20px;" type="submit">Sign in</button>
 							</div>
 						</form>
-						<div style="margin-top: 30px; margin-left: 95px;">
-							<i class="fa-chevron-circle-up" ng-click="singupClick()" style="cursor: pointer;">Sing up</i>
+						<div style="margin-top: 17px; margin-left: 95px;">
+							<a href='/Signup'><i class="fa fa-chevron-circle-up" style="cursor: pointer;">Sign up</i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<div class="push"></div>
+	<div class="footer">
+		<ul>
+			<li>RoadRunner.net</li>
+			<li>Hayden Smith</li>
+			<li>Jonathan Belyeu</li>
+			<li>Artem Golotin</li>
+		</ul>
+	</div>
 </body>
 </html>

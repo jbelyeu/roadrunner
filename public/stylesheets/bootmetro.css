@@ -9841,12 +9841,12 @@ ul#wizard-steps {
     margin: 7px 0px 7px 9px;
 }
 
-.footer {
-    position: fixed;
-    bottom: 10px;
-    width: 1366px;
-    text-align: center;
-}
+//.footer {
+//    position: fixed;
+//    bottom: 10px;
+//    width: 1366px;
+//    text-align: center;
+//}
 
 .msgbox-header {
     padding: 9px 15px;
@@ -10059,6 +10059,76 @@ input[type=radio]:checked + label:before {
     display: none;
 }
 
+/* Style for the dropdown box; Added by Artem */
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; 
+   width: 268px;
+}
+
+.styled-select.slate {
+   background: transparent;
+   height: 34px;
+   width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
+/* Sign up button. Added by Artem */
+.btn.signup {
+    margin-top: 10px;
+    font-size: 18px;
+    padding: 10px 48px 10px;
+    background-color: rgb(255, 138, 22);
+}
+
+.btn.signup:hover {
+    margin-top: 10px;
+    font-size: 18px;
+    padding: 10px 48px 10px;
+    background-color: rgb(255, 138, 22);
+}
+/* Push down from the main body to put the footer after. Added by Artem */
+.push {
+	height: 4em;
+	clear: both;
+}
+/* New footer. Added by Artem */
+.footer 
+{
+  padding-top: 9px;
+  font-size: .85em;
+  white-space: nowrap;
+  //height: 10px;
+  width: 100%;
+  border-top: 1px solid #ebebeb;
+  overflow: hidden;
+}
+.footer ul 
+{
+	color: #999;
+	float: left;
+	max-width: 80%;
+}
+.footer ul li 
+{
+	display: inline;
+	padding: 0 1.5em 0 0;
+}
 /*
 Changes to be made .. ___apul___ fault
 

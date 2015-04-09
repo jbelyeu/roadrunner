@@ -7,7 +7,7 @@
 	<title>RoadRunner.net</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
-	<link href='/images/mainLogo.png' rel='icon' type='image/ico' />
+	<link href='/images/R.png' rel='icon' type='image/ico' />
 	<link href="/stylesheets/font-awesome.css" rel="stylesheet" />
 	<link href="/stylesheets/main.css" rel="stylesheet"/>
 	<link href="/stylesheets/_bootmetro.css" rel="stylesheet"/>
@@ -272,11 +272,6 @@
 	{
 		font-size: 16px;
 	}
-	.footerText
-	{
-		color: white;
-		font-size: 22px;
-	}
 	#TableHead th
 	{
 		width: 183px;
@@ -313,7 +308,7 @@
 </style>
 
 
-<body ng-app="rrWebsiteApp" style="overflow-x: hidden; overflow-y: auto;">
+<body ng-app="rrWebsiteApp" style="width: 1366px; overflow-x: scroll; overflow-y: scroll;">
 	<div class="row-fluid" id='header' style="height: 120px;">
 		<div class='logo' style="margin-left: 10%; margin-right: 10%;"></div>
 		<div class='pull-right' style="margin-left: 10%; margin-right: 10%;">
@@ -395,51 +390,18 @@
 
 
 		</div>
-		<div id='map-canvas' class='pull-left RSS_feed BG-Color' style="width: 900px; height: 650px;"> <!-- style="width: 780px; height: 560px;" class='container' -->
-		
-		</div>
+		<div id='map-canvas' class='pull-left RSS_feed BG-Color' style="width: 900px; height: 650px;"></div>
 	</div>
-
-	<footer id="footer" class="ng-scope">
-		<div style="width: 1100px; margin-left=10%; margin-top: 20px; margin-bottom: 1%;">
-			<table border=0>
-				<tr id="TableHead" style="color: white; font-size: 22px;">
-					<th><span></span></th>
-					<th><span></span></th>
-					<th><span></span></th>
-					<th><span></span></th>
-					<th><span></span></th>
-					<th><span></span></th>
-					<th style="color: while; font-size: 22px; font-weight: 400px; width: 180px;">
-						<span class="pull-left ng-binding">RoadRunner.net</span>
-					</th>
-				</tr>
-				<tr>
-					<td><span></span></td>
-					<td><span></span></td>
-					<td><span></span></td>
-					<td><span></span></td>
-					<td><span></span></td>
-					<td><span></span></td>
-					<td class="pull-right" width="180px">
-						<table class="pull-left" width='180px'>
-							<tbody>
-							<tr>
-								<td class='pull-left'>Hayden Smith</td>
-							</tr>
-							<tr>
-								<td class='pull-left'>Jonathan Belyeu</td>
-							</tr>
-							<tr>
-								<td class='pull-left'>Artem Golotin</td>
-							</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</footer>
+	<!-- New footer --> 
+	<div class="push"></div>
+	<div class="footer">
+		<ul>
+			<li>RoadRunner.net</li>
+			<li>Hayden Smith</li>
+			<li>Jonathan Belyeu</li>
+			<li>Artem Golotin</li>
+		</ul>
+	</div>
 
 </body>
 </html>

@@ -16,6 +16,14 @@ router.get('/Account', function(req, res, next)
 	res.render('login', { title: 'Express' });
 });
 
+
+//GET signup page
+router.get('/Signup', function(req, res, next)
+{
+	res.render('signup', { title: 'Express' });
+});
+
+
 //POST new user info
 router.post('/signup', function(req, res, next) 
 {

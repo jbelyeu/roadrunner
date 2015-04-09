@@ -19,7 +19,7 @@ html
 body
 {
     margin: 0 auto;
-    width:1366px;
+    width:100%//1366px;
     position: relative;
     font-family: "Segoe UI", "Helvetica Neue", Helvetica, Calibri, Cambria, Arial, Sans-Serif;
     font-size: 1.1em;
