@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/roadrunner');
 require("./models/Users");
+require("./models/Routes");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

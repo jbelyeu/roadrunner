@@ -36,7 +36,36 @@
         	var route_result = null;
 		var gps_lat = 0.0;
   		var gps_lng = 0.0;
-		
+		var routename = 'defaultroutename';
+		var username = 'a';
+		var password = 'a';
+
+		function saveSubmit()
+        {
+
+            console.log("in saveSubmit()");
+            var myroute = [
+                {D: 1, K: 2 },
+                {D: 1, K: 2 },
+                {D: 1, K: 2 },
+                {D: 1, K: 2 }
+            ]
+            
+            console.log(route);
+
+            var scope = angular.element( $( "#save_route" ) ) .scope();
+            scope.saveRoute
+                (
+                    myroute,
+                    gps_lat,
+                    gps_lng,
+                    routename, 
+                    username,
+                    password                                
+                );
+        }
+
+
 		function geoFindMe() {
 
         		var output = document.getElementById("out");
@@ -347,7 +376,7 @@
 	</div>
 
 	<div class='row-fluid' style="width: 90%; margin-left: 30px; margin-right:10%; margin-top: 25px;"> <!-- might need to add an ng-model -->
-		<div class='pull-left BG-Color' style="width: 312px; height: 650px; text-align:center;">
+		<div class='pull-left BG-Color' style="width: 312px; height: 650px; text-align:center;" ng-app="rrWebSite" ng-controller="MainCtrl">
 			
 
 
@@ -374,7 +403,9 @@
 				<p>3) Save your route to your profile below</p>
 			</div>
 
-			<button id='save_route'>Save Route</button>
+			<form onsubmit="saveSubmit()">
+				<button id='save_route' type="submit">Save Route</button>
+			</form>
 
 			<!--Custom Map Elements-->
     			<div id="search-panel">
