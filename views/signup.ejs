@@ -24,6 +24,7 @@
 	<script src="/javascripts/angular-resource.js"></script>
 	<script src="/javascripts/app.js"></script>
 	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 	<style type="text/css">
 		.errormsg 
@@ -41,8 +42,8 @@
 	</script>
 
 </head>
-<body ng-app='rrWebsiteApp' style="overflow-x: scroll; overflow-y: scroll;" ng-controller="SignUpCtrl">
-	<div class="ng-scope">
+<body ng-app='rrWebsiteApp' style="overflow-x: scroll; overflow-y: scroll;" >
+	<div class="ng-scope" ng-controller="SignUpCtrl">
 		<div class='container ng-scope'>
 			<div class='span8 offset2' style="padding-top: 130px">
 				<a href="/"><div class="logo" style="margin-left: 10%; margin-right: 10%"></div></a>
@@ -102,7 +103,7 @@
 						</div>
 						<div style="margin-top: 35px; width: 72%">
 							<div style="text-align: center;">
-								<button class="btn-signup" ng-submit="signUpNewUser()" style="margin-bottom: 20px; text-align: center; font-style: normal; font-size: 20px;" type="submit">Sign up</button>
+								<button class="btnww-signup" ng-click="signUpNewUser()" style="margin-bottom: 20px; text-align: center; font-style: normal; font-size: 20px;" type="submit">Sign up</button>
 							</div>
 						</div>
 					</div>

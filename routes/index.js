@@ -73,19 +73,51 @@ router.get('/getRoutes/:username/:pass', function(req, res, next)
 });
 
 //POST new user info
-router.post('/signup', function(req, res, next) 
+router.post('/Signup', function(req, res, next) 
 {
 	console.log("in routes POST method");
 	console.log(req.body);
 	var user = new User(req.body);
 	console.log(user);
-	user.save(function (err, user)
+	
+	var mongoClient = require("mongodb").MongoClient;
+	mongoClient.connect('mongodb://localhost/roadrunner', function(err, db)
 	{
-		if (err)
+		if (err)	{ throw err; }
+		
+		db.collection("users", function (err, users)
 		{
-			return next(err);
-		}
-		res.json(user);
+			console.log("in call to db: " + user.password);
+			if (err) {throw err;}
+			
+			users.find({password: user.password, username: user.username}, function (err, items)
+			{
+				if (err) {throw err;}
+				items.toArray(function (err, itemArray)
+				{
+					console.log("validating user");
+					console.log(itemArray);
+
+					if (err) {throw err;}
+					if (itemArray.length > 0)
+					{
+						console.log("valid user");
+						res.json("Username already exists");
+					}
+					else
+					{
+						user.save(function (err, user)
+						{
+							if (err)
+							{
+								return next(err);
+							}
+							res.json("User saved");
+						});					
+					}
+				});
+			});
+		});
 	});
 });
 
@@ -122,7 +154,7 @@ router.post('/validate', function(req, res, next)
 					if (itemArray.length > 0)
 					{
 						console.log("valid user");
-						res.json("Valid user " + uname);
+						res.json(itemArray[0].first_name);
 					}
 					else
 					{
