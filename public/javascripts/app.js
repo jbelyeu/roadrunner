@@ -272,12 +272,13 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	'userFactory',
 	function ($rootScope, $scope, $stateParams, mainFactory, userFactory)
 	{
-		$scope.saveRoute = function(route, latitude, longitude, routename)
+		$scope.saveRoute = function(route, latitude, longitude)
 		{
 			console.log("in saveRoute");
 			console.log(route);
 			console.log(latitude);
 			console.log(longitude);
+			var routename = prompt("Please enter a name for your route", "<name>");
 			console.log(routename);
 
 			if (latitude == undefined ||
