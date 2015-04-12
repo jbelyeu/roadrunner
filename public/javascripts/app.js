@@ -1,3 +1,31 @@
+function getCookie(key)
+{
+	console.log(document.cookie);
+	
+	cookies = document.cookie.split(';');
+	
+	console.log("cookies " + key);
+	console.log(cookies);
+	for (var i = 0; i < cookies.length; ++i)
+	{
+		var cookie = cookies[i];
+		while (cookie.charAt(0) == ' ') 
+		{
+			cookie = cookie.substring(1); //apparently cookies have to be stripped
+		}
+		var pair = cookie.split('=');
+		if (pair[0] == key)
+		{
+			return pair[1];
+		}
+	}
+}
+
+function putCookie(key, value)
+{
+	document.cookie = key + "=" + value + ";";
+}
+
 angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 .factory('userFactory', ['$http', function($http)
@@ -35,22 +63,14 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			}
 			else
 			{
+				putCookie("username", userData.username);
+				putCookie("password", userData.password);
 				var name = data.toString();
 				name = name.replace(/['"]+/g, "");
 				alert("Welcome back, " + name + "!");
 			}
 		});		
 	
-	};
-
-	sessionUser.getUsername = function()
-	{
-		return sessionUser.username;
-	};
-
-	sessionUser.getPassword = function()
-	{
-		return sessionUser.password;
 	};
 
 	sessionUser.saveNewUser = function(userObj)
@@ -69,6 +89,9 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			else
 			{
 				alert("You are now a member of RoadRunner!");
+
+				putCookie("username", userData.username);
+				putCookie("password", userData.password);
 			}
 		});
 	}
@@ -85,7 +108,25 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	route.save = function(routeObj)
 	{
 		console.log("trying to send post");
-		
+		var username = getCookie("username");
+		var password = getCookie("password");
+		console.log(username);
+		console.log(password);
+
+		if (typeof username == "undefined" ||
+			typeof password == "undefined" )
+		{
+			username = prompt("Enter your username and password to save. To avoid this message, log in before saving", "Username");
+			if ( username == null)
+			{
+				return; //if they don't input a username, we don't prompt for a password
+			}
+			password = prompt("Password", "Password");
+			
+		}
+		routeObj.username = username;
+		routeObj.password = password;
+
 		$.ajax({
 			type: "POST",
 			url: 'http://52.10.242.23/saveRoute/',
@@ -178,13 +219,12 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 				password: $scope.password
 			}
 		
-			console.log(user);
 			userFactory.validate(user, function()
 			{
 				console.log("loserer");
 				alert("Loser");
 			});
-			$rootScope.username = $scope.username;
+			
 		};
 		
 		$scope.addNewUser = function()

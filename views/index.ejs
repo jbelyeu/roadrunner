@@ -61,6 +61,11 @@
                 );
         }
 
+		function signOut()
+		{
+			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		}
 
 		function geoFindMe() {
 
@@ -399,8 +404,9 @@
 				<p>3) Save your route to your profile below</p>
 			</div>
 
-			<form onsubmit="saveSubmit()">
-				<button id='save_route' type="submit">Save Route</button>
+			<form>
+				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
+				<button id='logout' onclick="signOut()" type="submit">Sign Out</button>
 			</form>
 
 			<!--Custom Map Elements-->
