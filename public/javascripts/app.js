@@ -40,21 +40,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		password: 'default_password'
 	};
 
-	sessionUser.signup = function(userData)
+	sessionUser.validate = function(userData)
 	{
-		return $http.post('/signup/', userData).success(function(data)
-		{
-			if (data == "")
-			{
-				//it failed to save
-			}
-		});
-	};
-
-	sessionUser.validate = function(userData, callbackFun)
-	{
-		console.log("in validate factory");
-		console.log(userData);
 		$http.post('/validate/', userData).success(function(data)
 		{
 			var errMsg = "\"Validation Failed: User invalid\"";
@@ -78,13 +65,11 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 	sessionUser.saveNewUser = function(userObj)
 	{
-		console.log("in saveNewUser()");
 		sessionUser.username = userObj.username;
 		sessionUser.password = userObj.password;
 
 		$http.post('/Signup', userObj).success(function(data)
 		{
-			console.log(data);
 			if (data == "\"Username already exists\"")
 			{
 				alert("Username already exists!");
@@ -110,11 +95,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 	route.save = function(routeObj)
 	{
-		console.log("trying to send post");
 		var username = getCookie("username");
 		var password = getCookie("password");
-		console.log(username);
-		console.log(password);
 
 		if (typeof username == "undefined" ||
 			typeof password == "undefined" )
@@ -139,7 +121,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 		function success(data)
 		{
-			console.log(data);
 			if (data == "Save Failed: User invalid")
 			{
 				alert('Save Failed. User invalid');
@@ -153,8 +134,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 	route.loadRoutes = function(userData, callbackFun)
 	{
-		console.log("trying to call GET");
-
 		var url = '/getRoutes/' + userData.username + '/' + userData.password;
 		$http.get(url).success(function(data)
 		{
@@ -210,8 +189,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	{
 		$scope.validateUser = function()
 		{
-			console.log("entering validate function");
-			console.log($scope);
 			if (typeof $scope.username === 'undefined' ||
 				typeof $scope.password === 'undefined')
 			{
@@ -222,11 +199,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 				password: $scope.password
 			}
 		
-			userFactory.validate(user, function()
-			{
-				console.log("loserer");
-				alert("Loser");
-			});
+			userFactory.validate(user);
 			
 		};
 		
@@ -281,7 +254,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			}
 		
 			var birthdateStr = $scope.birth_year + " " + $scope.birth_month + " " + $scope.birth_day;
-			console.log(birthdateStr);
 			var dateChecker = Date.parse(birthdateStr);
 	
 			if (isNaN(dateChecker))
@@ -291,7 +263,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			}
 
 			var birthDate = new Date(birthdateStr);
-			console.log(birthDate);
 			var newUser = {
 				first_name: $scope.first_name,
 				last_name: $scope.last_name,
@@ -317,12 +288,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	{
 		$scope.saveRoute = function(route, latitude, longitude)
 		{
-			console.log("in saveRoute");
-			console.log(route);
-			console.log(latitude);
-			console.log(longitude);
 			var routename = prompt("Please enter a name for your route", "<name>");
-			console.log(routename);
 
 			if (latitude == undefined ||
 				longitude == undefined ||
@@ -333,19 +299,10 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 				console.log("failed controller line 107");
 				return;
 			}
-
-			//var username = userFactory.getUsername();
-			//var password = userFactory.getPassword();
-
-			console.log($rootScope.username);
-			console.log("user^");
-
 			var newRoute = {
 				latitude: latitude,
 				longitude: longitude,
 				routename: routename,
-	//			username: username,
-	//			password: password,
 				route: route
 			};
 			mainFactory.save(newRoute);
