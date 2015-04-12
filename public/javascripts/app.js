@@ -23,7 +23,10 @@ function getCookie(key)
 
 function putCookie(key, value)
 {
-	document.cookie = key + "=" + value + ";";
+	var expireTime = new Date();
+	expireTime.setTime(expireTime.getTime() + ( 60 * 60 * 1000));
+	var expires = "expires=" + expireTime.toUTCString();
+	document.cookie = key + "=" + value + ";" + expires;
 }
 
 angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
