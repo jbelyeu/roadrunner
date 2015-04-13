@@ -10103,22 +10103,27 @@ input[type=radio]:checked + label:before {
     background-color: rgb(255, 138, 22);
 }
 /* Push down from the main body to put the footer after. Added by Artem */
-.push {
-	height: 100px;
-	clear: both;
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -80px;
+}
+.footer, .push {
+	height: 80px;
 }
 /* New footer. Added by Artem */
 .footer 
 {
-  padding-top: 9px;
+  //padding-top: 4px;
+  margin: 0 auto;
   font-size: .85em;
-  white-space: nowrap;
-  height: 100px;
+//  white-space: nowrap;
   width: 100%;
   border-top: 1px solid #ebebeb;
-  overflow: hidden;
-  bottom: 0;
-  position: fixed;
+ // overflow: hidden;
+  //bottom: 0;
+  position: relative;
 }
 .footer ul 
 {

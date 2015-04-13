@@ -43,75 +43,77 @@
 
 </head>
 <body ng-app='rrWebsiteApp' style="overflow-x: scroll; overflow-y: scroll;" >
-	<div class="ng-scope" ng-controller="SignUpCtrl">
-		<div class='container ng-scope'>
-			<div class='span8 offset2' style="padding-top: 130px">
-				<a href="/"><div class="logo" style="margin-left: 10%; margin-right: 10%"></div></a>
-				<div class='span6' style="padding-top: 20px; width: 600px;">
-					<div class="form-horizontal" style="vertical-align: left; padding-left: 20px;">
-						<h3 style="margin-left: 24%; padding-top: 20px; padding-bottom: 20px;" class="dark-grey">Registration</h3>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Name</label>
-							<input type="text" name="first_name" id="first_name" style="margin-right: 2px;" placeholder="First" ng-model="first_name"</input>
-							<input type="text" name="last_name" id="last_name" placeholder="Last" ng-model="last_name"></input>
-						</div>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Username</label>
-							<input type="text" style='width: 72%' name="username" id="username" placeholder="Username" ng-model="username"></input>
-						</div>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Password</label>
-							<input type='password' name="password" id='password' style="margin-right: 2px;" placeholder='Password' ng-model="password"></input>
-							<input type='password' name="password_repeat" id='password_repeat' placeholder='Repeat Password' ng-model="password_repeat"></input>
-						</div>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Email Address</label>
-							<input type="text" name="email" id="email" style="width: 72%;" ng-model="email" placeholder="Email Address"></input>
-						</div>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Birthday</label>
-							<fieldset style="width: 73%">
-								<span id="BirthMonthHolder">
-									<select class="styled-select slate" style="width: 47%;" ng-model="birth_month" id="birth_month">
-										<option value="">Month</option>
-										<option value="01" >January</option>
-										<option value="02" >February</option>
-										<option value="03" >March</option>
-										<option value="04" >April</option>
-										<option value="05" >May</option>
-										<option value="06" >June</option>
-										<option value="07" >July</option>
-										<option value="08" >August</option>
-										<option value="09" >September</option>
-										<option value="10" >October</option>
-										<option value="11" >November</option>
-										<option value="12" >December</option>
-									</select>
-								</span>
-								<input type="text" style="width: 20%" maxlength="2" id="birth_day" ng-model="birth_day" placeholder="Day"></input>
-								<input type="text" style="width: 30%" maxlength="4" id="birth_year" ng-model="birth_year" placeholder="Year"></input>
-							</fieldset>
-						</div>
-						<div style="margin-bottom: 1%" class="form-group col-lg-12">
-							<label class="ng-binding">Gender</label>
-							<select class="styled-select slate" style="width: 72%" ng-model="gender" name="Gender" id="Gender">
-								<option value="">I am...</option>
-								<option value="FEMALE">Female</option>
-								<option value="MALE">Male</option>
-							</select>
-	<!--								<span role="alert" class="errormsg" id="errornsg_0_Gender"></span> -->
-						</div>
-						<div style="margin-top: 35px; width: 72%">
-							<div style="text-align: center;">
-								<button class="btnww-signup" ng-click="signUpNewUser()" style="margin-bottom: 20px; text-align: center; font-style: normal; font-size: 20px;" type="submit">Sign up</button>
+	<div class="wrapper">
+		<div class="ng-scope" ng-controller="SignUpCtrl">
+			<div class='container ng-scope'>
+				<div class='span8 offset2' style="padding-top: 130px">
+					<a href="/"><div class="logo" style="margin-left: 10%; margin-right: 10%"></div></a>
+					<div class='span6' style="padding-top: 20px; width: 600px;">
+						<div class="form-horizontal" style="vertical-align: left; padding-left: 20px;">
+							<h3 style="margin-left: 24%; padding-top: 20px; padding-bottom: 20px;" class="dark-grey">Registration</h3>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Name</label>
+								<input type="text" name="first_name" id="first_name" style="margin-right: 2px;" placeholder="First" ng-model="first_name"</input>
+								<input type="text" name="last_name" id="last_name" placeholder="Last" ng-model="last_name"></input>
+							</div>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Username</label>
+								<input type="text" style='width: 72%' name="username" id="username" placeholder="Username" ng-model="username"></input>
+							</div>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Password</label>
+								<input type='password' name="password" id='password' style="margin-right: 2px;" placeholder='Password' ng-model="password"></input>
+								<input type='password' name="password_repeat" id='password_repeat' placeholder='Repeat Password' ng-model="password_repeat"></input>
+							</div>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Email Address</label>
+								<input type="text" name="email" id="email" style="width: 72%;" ng-model="email" placeholder="Email Address"></input>
+							</div>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Birthday</label>
+								<fieldset style="width: 73%">
+									<span id="BirthMonthHolder">
+										<select class="styled-select slate" style="width: 47%;" ng-model="birth_month" id="birth_month">
+											<option value="">Month</option>
+											<option value="01" >January</option>
+											<option value="02" >February</option>
+											<option value="03" >March</option>
+											<option value="04" >April</option>
+											<option value="05" >May</option>
+											<option value="06" >June</option>
+											<option value="07" >July</option>
+											<option value="08" >August</option>
+											<option value="09" >September</option>
+											<option value="10" >October</option>
+											<option value="11" >November</option>
+											<option value="12" >December</option>
+										</select>
+									</span>
+									<input type="text" style="width: 20%" maxlength="2" id="birth_day" ng-model="birth_day" placeholder="Day"></input>
+									<input type="text" style="width: 30%" maxlength="4" id="birth_year" ng-model="birth_year" placeholder="Year"></input>
+								</fieldset>
+							</div>
+							<div style="margin-bottom: 1%" class="form-group col-lg-12">
+								<label class="ng-binding">Gender</label>
+								<select class="styled-select slate" style="width: 72%" ng-model="gender" name="Gender" id="Gender">
+									<option value="">I am...</option>
+									<option value="FEMALE">Female</option>
+									<option value="MALE">Male</option>
+								</select>
+		<!--								<span role="alert" class="errormsg" id="errornsg_0_Gender"></span> -->
+							</div>
+							<div style="margin-top: 35px; width: 72%">
+								<div style="text-align: center;">
+									<button class="btnww-signup" ng-click="signUpNewUser()" style="margin-bottom: 20px; text-align: center; font-style: normal; font-size: 20px;" type="submit">Sign up</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="push"></div>
 	</div>
-	<div class="push"></div>
 	<div class="footer">
 		<ul>
 			<li>RoadRunner.net</li>
