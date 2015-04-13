@@ -155,11 +155,13 @@
         		google.maps.event.addListener(map, "click", function(event) {
     
                 		if(route.length < 8) {
-                        		var lat = event.latLng.lat();
-                        		var lng = event.latLng.lng();
-                        		console.log("Lat=" + lat + "; Lng=" + lng);
+                        		var new_lat = event.latLng.lat();
+                        		var new_lng = event.latLng.lng();
+                        		console.log("Lat=" + new_lat + "; Lng=" + new_lng);
     
-                        		route.push(new google.maps.LatLng(lat, lng));
+                        		route.push({
+						lat : new_lat, 
+						lng : new_lng});
 
                         		calculateRoute();
                 		} else {
@@ -188,7 +190,10 @@
 
               		  		dist += myroute.legs[i].distance.value; //calc total distance
                 			if(i > 0) {
-                        			route[i-1] = myroute.legs[i].start_location; //update route waypoint information
+					
+                        			route[i-1] = {
+							lat : myroute.legs[i].start_location.lat(), 
+							lng : myroute.legs[i].start_location.lng()}; //update route waypoint information
                 			}
         			}
 	
@@ -234,7 +239,7 @@
         		waypts = [];
         		for(var i = 0; i < route.length; i++) {
                 		waypts.push({
-                        		location: route[i],
+                        		location: new google.maps.LatLng(route[i].lat, route[i].lng),
                         		stopover: true});
         		}
         		console.log(waypts);
