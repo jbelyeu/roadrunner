@@ -10104,7 +10104,7 @@ input[type=radio]:checked + label:before {
 }
 /* Push down from the main body to put the footer after. Added by Artem */
 .push {
-	height: 4em;
+	height: 100px;
 	clear: both;
 }
 /* New footer. Added by Artem */
@@ -10113,10 +10113,12 @@ input[type=radio]:checked + label:before {
   padding-top: 9px;
   font-size: .85em;
   white-space: nowrap;
-  //height: 10px;
+  height: 100px;
   width: 100%;
   border-top: 1px solid #ebebeb;
   overflow: hidden;
+  bottom: 0;
+  position: fixed;
 }
 .footer ul 
 {
