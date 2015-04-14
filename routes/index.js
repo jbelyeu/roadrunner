@@ -3,6 +3,14 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Route = mongoose.model('Route');
+var cookieParser = require('cookie-parser');
+
+var app = express();
+app.use(cookieParser());
+
+/*   !!!!! NOTE !!!!! 
+ *   Account should depend on cookies 
+ *   */
 
 	
 /* GET home page. */
@@ -12,10 +20,13 @@ router.get('/', function(req, res, next)
 });
 
 
-//GET login page
+//GET account page
 router.get('/Account', function(req, res, next) 
 {
-	res.render('login', { title: 'Express' });
+	if (req.cookies)
+		res.render('account', { title: 'Express' });
+	else
+		res.render('login', { title: 'Express' });
 });
 
 //GET signup page
