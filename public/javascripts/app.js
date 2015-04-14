@@ -248,19 +248,24 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 ])
 
 // This is the controller defined by Artem
-//.controller('AccCtrl', ['$scope', function($scope) {
-//	$scope.name = "Vasya Pupkin";
-//	$scope.age = 52;
-//	routes = ['route1', 'route2', 'route3', 'route4'];
-//	
-//	$scope.routes = routes;
-//
-//	$scope.routeClick = function(name) {
-//		console.log(name);
-//		//This passes the name of the route correctly
-//	}
-//
-//}])
+.controller('AccCtrl', ['$scope', function($scope) {
+	$scope.name = "Hayden Smith";
+	$scope.age = 24;
+	routes = {'Route1':3.5, 
+		'Route2':4.3, 
+		'Route3':4.4, 
+		'Route4':3.9, 
+		'Route5':4.3,
+		'Route6':5.1,
+		'Route7':4.4};
+	
+	$scope.routes = routes;
+
+	$scope.routeClick = function(name) {
+		console.log(name);
+		//This passes the name of the route correctly
+	}
+}])
 
 .controller('LoginCtrl',
 [
@@ -364,27 +369,27 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	}
 ])
 
-.controller('AccCtrl', 
-[
-	'$rootScope',
-	'$scope',
-	'$stateParams',
-	'mainFactory', 
-	'userFactory',
-	function ($rootScope, $scope, $stateParams, mainFactory, userFactory)
-	{
-		$scope.load = function()
-		{
-			
-		};
-
-		$scope.saveChanges = function(userdata)
-		{
-			userFactory.saveNewUser($scope.first_name, $scope.last_name,
-				$scope.username, $scope.password, $scope.password_repeat, 
-				$scope.email, $scope.birth_day, $scope.birth_month, 
-				$scope.birth_year, $scope.gender);
-		};
-
-	}
-]);
+//.controller('AccCtrl', 
+//[
+//	'$rootScope',
+//	'$scope',
+//	'$stateParams',
+//	'mainFactory', 
+//	'userFactory',
+//	function ($rootScope, $scope, $stateParams, mainFactory, userFactory)
+//	{
+//		$scope.load = function()
+//		{
+//			
+//		};
+//
+//		$scope.saveChanges = function(userdata)
+//		{
+//			userFactory.saveNewUser($scope.first_name, $scope.last_name,
+//				$scope.username, $scope.password, $scope.password_repeat, 
+//				$scope.email, $scope.birth_day, $scope.birth_month, 
+//				$scope.birth_year, $scope.gender);
+//		};
+//
+//	}
+//]);

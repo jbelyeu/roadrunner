@@ -67,8 +67,8 @@
 				<label class="ng-binding"><h3>Name: <small>{{name}}</small></h3></label>
 				<label class="ng-binding"><h3>Age: <small>{{age}}</small></h3></label>
 				<label class="ng-binding"><h3>Your routes: </label></h3>
-				<select multiple class="styled-select" onchange="javascript:location.href = '/'" style="background: transparent; height: 200px; width: 300px; overflow-y: scroll;">
-					<option ng-click="routeClick(route)" ng-repeat="route in routes">{{route}}</option> 
+				<select multiple class="styled-select" onchange="javascript:location.href = '/'" style="background: transparent; height: 200px; width: 220px; overflow-x: auto; overflow-y: scroll;">
+					<option ng-click="routeClick(route)" ng-repeat="(route, dist) in routes">{{route}}: {{dist}}km</option> 
 				</select>
 			</div>
 			<div class="right-account">

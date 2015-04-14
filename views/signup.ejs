@@ -113,13 +113,14 @@
 		</ul>
 	</div>
 	<script type="text/javascript">
-		var inputEmptyErrorMessage = 'You can\x27t leave this empty.';
+		var inputEmptyErrorMessage = 'You can\x27t leave this field empty.';
 		var passwordsDontMatch = 'Passwords don\x27t match';
 		var passwordsMatch = '<strong>Passwords match!</strong>';
 
 		function checkPasswords(pass1, pass2) {
 			this.error = document.getElementById('errormsg_0_Passwords');
 			if (pass1.value != pass2.value) {
+				this.error.style.color = "red";
 				this.error.innerHTML = passwordsDontMatch;
 			}
 			else {

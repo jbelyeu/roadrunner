@@ -10158,7 +10158,7 @@ input[type=radio]:checked + label:before {
 .errormsg {
   margin: .5em 0 0;
   display: inline;
-  color: #dd4b39;
+  color: red;
   line-height: 12px;
   font-size: 11px;
 }
