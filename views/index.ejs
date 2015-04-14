@@ -40,21 +40,10 @@
 
 		function saveSubmit()
         {
-
-            console.log("in saveSubmit()");
-            var myroute = [
-                {D: 1, K: 2 },
-                {D: 1, K: 2 },
-                {D: 1, K: 2 },
-                {D: 1, K: 2 }
-            ]
-            
-            console.log(route);
-
             var scope = angular.element( $( "#save_route" ) ) .scope();
             scope.saveRoute
                 (
-                    myroute,
+                    route,
                     gps_lat,
                     gps_lng,
                     routename 
@@ -268,7 +257,7 @@
 	</script>
 
 	<script>
-      		$(document).ready(function(){
+      	$(document).ready(function(){
 
        			$("#cl_pts").click(function() {
           			console.log("clearing points");
@@ -282,7 +271,6 @@
        			$("#calc_route").click(function() {
 
           			calculateRoute();
-          			console.log("here");
        			});
 
 			$("#save_route").click(function() {
@@ -296,6 +284,11 @@
 			$("#zoom-out").click(function() {
 				map.setZoom(map.getZoom() - 1);
 			});
+		});
+
+		$(document).ready(function(){
+			console.log("firing");
+       	
 		});
 	</script>
 
@@ -413,6 +406,8 @@
 			<form>
 				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
 				<button id='logout' onclick="signOut()" type="submit">Sign Out</button>
+				<button id='logout' ng-click="loadRoute()" type="submit">Load route</button>
+
 			</form>
 
 			<!--Custom Map Elements-->

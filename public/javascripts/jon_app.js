@@ -61,46 +61,45 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	
 	};
 
-	sessionUser.saveNewUser = function (first_name, last_name, username, 
-		password, password_repeat, email, birth_day, birth_month, birth_year, gender)
+	sessionUser.saveNewUser = function(scope)
 	{
-		if (typeof first_name == 'undefined' ||
-			typeof last_name == 'undefined' ||
-			typeof username == 'undefined' ||
-			typeof password == 'undefined' ||
-			typeof password_repeat == 'undefined' ||
-			typeof email == 'undefined' ||
-			typeof birth_day == 'undefined' ||
-			typeof birth_month == 'undefined' ||
-			typeof birth_year == 'undefined' ||
-			typeof gender == 'undefined')
+		if (typeof scope.first_name == 'undefined' ||
+			typeof scope.last_name == 'undefined' ||
+			typeof scope.username == 'undefined' ||
+			typeof scope.password == 'undefined' ||
+			typeof scope.password_repeat == 'undefined' ||
+			typeof scope.email == 'undefined' ||
+			typeof scope.birth_day == 'undefined' ||
+			typeof scope.birth_month == 'undefined' ||
+			typeof $scope.birth_year == 'undefined' ||
+			typeof scope.gender == 'undefined')
 		{
 			console.log("undefined param passed to signUpNewUser()");
 			return;
 		}
 	
-		if (password != password_repeat)
+		if (scope.password != scope.password_repeat)
 		{
 			alert("Password does not match. Please re-enter");
 			return;
 		}
 	
-		var birthdateStr = birth_year + " " + birth_month + " " + birth_day;
+		var birthdateStr = scope.birth_year + " " + scope.birth_month + " " + scope.birth_day;
 		var dateChecker = Date.parse(birthdateStr);
 
 		if (isNaN(dateChecker))
 		{
-			alert("Biirth date is invalid");
+			alert("Birth date is invalid");
 			return;
 		}
 
 		var birthDate = new Date(birthdateStr);
 		var userObj = {
-			first_name: first_name,
-			last_name: last_name,
-			username: username,
-			password: password,
-			email: email,
+			first_name: scope.first_name,
+			last_name: scope.last_name,
+			username: scope.username,
+			password: scope.password,
+			email: scope.email,
 			birthdate: birthDate				
 		};
 
@@ -164,10 +163,9 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 		function success(data)
 		{
-			var failedMsg = "Save Failed: ";
-			if (data.indexOf( failedMsg) != -1 )
+			if (data == "Save Failed: User invalid")
 			{
-				alert(data);
+				alert('Save Failed. User invalid');
 			}
 			else
 			{
@@ -297,10 +295,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	{
 		$scope.signUpNewUser = function()
 		{
-			userFactory.saveNewUser($scope.first_name, $scope.last_name,
-				$scope.username, $scope.password, $scope.password_repeat, 
-				$scope.email, $scope.birth_day, $scope.birth_month, 
-				$scope.birth_year, $scope.gender);
+			console.log($scope);
+			userFactory.saveNewUser($scope);
 		};
 	}
 ])
@@ -346,7 +342,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	}
 ])
 
-.controller('AccCtrl', 
+.controller('MainCtrl', 
 [
 	'$rootScope',
 	'$scope',
@@ -357,15 +353,11 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	{
 		$scope.load = function()
 		{
-			
 		};
 
 		$scope.saveChanges = function(userdata)
 		{
-			userFactory.saveNewUser($scope.first_name, $scope.last_name,
-				$scope.username, $scope.password, $scope.password_repeat, 
-				$scope.email, $scope.birth_day, $scope.birth_month, 
-				$scope.birth_year, $scope.gender);
+			userFactory.saveNewUser($scope);
 		};
 
 	}

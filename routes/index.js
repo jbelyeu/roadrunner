@@ -24,13 +24,12 @@ router.get('/Signup', function(req, res, next)
 	res.render('signup', { title: 'Express' });
 });
 
-//get all running routes for a given username
-router.get('/getRoutes/:username/:pass', function(req, res, next) 
+//get all running routes for a given username or one route if routename is given
+router.get('/getRoutes/:username/:pass/:routename', function(req, res, next) 
 {
-	console.log("stuff");
-	console.log(req.params);
 	var pass = req.params.pass;
 	var user = req.params.username;
+	var routename = req.params.routename;
 
 	var mongoClient = require("mongodb").MongoClient;
 	mongoClient.connect('mongodb://localhost/roadrunner', function(err, db)
@@ -39,31 +38,33 @@ router.get('/getRoutes/:username/:pass', function(req, res, next)
 		
 		db.collection("users", function (err, users)
 		{
-			console.log("in call to db" + pass);
 			if (err) {throw err;}
+			var searchTerm = {password: pass, username: user};
 			
-			users.find({password: pass, username: user}, function (err, items)
+			users.find(searchTerm, function (err, items)
 			{
-				console.log("pass: " + pass);
 				if (err) {throw err;}
 				items.toArray(function (err, itemArray)
 				{
 					if (err) {throw err;}
 					if (itemArray.length > 0) //means the user is valid
 					{
-						console.log("user valid");
-						console.log(itemArray);
-						Route.find({username: user}, function (err, routes)
+						searchTerm = {username: user};
+
+						if (routename != "null" ) 
+						{
+							routename = routename.replace(/_/g, ' ');
+							searchTerm['routename'] = routename;
+						}
+						Route.find(searchTerm, function (err, routes)
 						{
 							if (err) {throw err;}
-							console.log("routes found: ");
-							console.log(routes);
 							res.json(routes);
 						});
 					}
 					else
 					{
-						res.json("Get Failed: User invalid");
+						res.json("GET failed: User invalid or no routes found for user");
 					}
 				});
 			});
@@ -75,10 +76,7 @@ router.get('/getRoutes/:username/:pass', function(req, res, next)
 //POST new user info
 router.post('/Signup', function(req, res, next) 
 {
-	console.log("in routes POST method");
-	console.log(req.body);
 	var user = new User(req.body);
-	console.log(user);
 	
 	var mongoClient = require("mongodb").MongoClient;
 	mongoClient.connect('mongodb://localhost/roadrunner', function(err, db)
@@ -87,7 +85,6 @@ router.post('/Signup', function(req, res, next)
 		
 		db.collection("users", function (err, users)
 		{
-			console.log("in call to db: " + user.password);
 			if (err) {throw err;}
 			
 			users.find({password: user.password, username: user.username}, function (err, items)
@@ -95,10 +92,8 @@ router.post('/Signup', function(req, res, next)
 				if (err) {throw err;}
 				items.toArray(function (err, itemArray)
 				{
-					console.log("validating user");
-					console.log(itemArray);
-
 					if (err) {throw err;}
+					
 					if (itemArray.length > 0)
 					{
 						console.log("valid user");
@@ -165,17 +160,43 @@ router.post('/validate', function(req, res, next)
 			});
 		});
 	});
-
-
 });
 
 //POST save route
 router.post('/saveRoute', function(req, res, next)
 {
-
-	console.log("in saveRoute route");
-	console.log(req.body);
 	var body = req.body;
+	var routeArr = [];
+	var latitude = '', longitude = '';
+
+	for (var key in body)
+	{
+		if (key.indexOf("[lat]") != -1)
+		{
+			console.log("here");
+			latitude = body[key];
+			delete body[key];
+		}
+		else if (key.indexOf("[lng]") != -1 )
+		{
+			longitude = body[key];
+			delete body[key];
+		}
+
+		if (latitude != '' && longitude != '')
+		{
+			var pair = {
+				lat: latitude,
+				lng: longitude
+			};
+			routeArr.push(pair);
+
+			latitude = '';
+			longitude = '';
+		}
+
+	}
+	body.route = routeArr;
 	var pass = body.password;
 	delete body.password;
 	var userValid = true;
@@ -183,43 +204,54 @@ router.post('/saveRoute', function(req, res, next)
 	var mongoClient = require("mongodb").MongoClient;
 	mongoClient.connect('mongodb://localhost/roadrunner', function(err, db)
 	{
-		if (err)
-		{
-			throw err;
-		}
+		if (err) { throw err; }
 		
 		db.collection("users", function (err, users)
 		{
-			console.log("in call to db: " + pass);
 			if (err) {throw err;}
-			
+
+			//make sure user is valid
 			users.find({password: pass, username: body.username}, function (err, items)
 			{
 				if (err) {throw err;}
 				items.toArray(function (err, itemArray)
 				{
 					if (err) {throw err;}
-					if (itemArray.length > 0)
+					if (itemArray.length <= 0)
 					{
-						console.log("valid user");
-						var route = new Route(req.body);
-						console.log('route');
-						route.create(function (err, route)
-						{
-							console.log("in save");
-							if (err)
-							{
-								console.log('err');
-								return next(err);
-							}
-							res.json(route);
-						});
-					}
-					else
-					{
-						console.log("invalid user");
+			
 						res.json("Save Failed: User invalid");
 					}
+					//make sure the routename is unique
+					db.collection("routes", function(err, routes)
+					{
+						routes.find({username: body.username, routename: body.routename}, function (err, routesFound)
+						{
+							if (err) {throw err};
+							routesFound.toArray (function (err, routeArr)
+							{
+								console.log("arr");
+								console.log(routeArr);
+								if (routeArr.length > 0)
+								{
+									console.log("what the shiz?");
+									res.json("Save Failed: Routename already in use. Please choose another");
+								}
+								else
+								{
+									var route = new Route(req.body);
+									route.create(function (err, route)
+									{
+										if (err)
+										{
+											res.json("Save Failed: Unknown error");
+											return next(err);
+										}
+									});
+								}
+							});
+						});
+					});
 				});
 			});
 		});

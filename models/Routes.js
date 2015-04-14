@@ -11,6 +11,7 @@ var RouteSchema = new mongoose.Schema
 RouteSchema.methods.create = function(obj) 
 {
 	console.log("in model function");
+	console.log(obj.route);
 	this.save(obj);
 };
 
