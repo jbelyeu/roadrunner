@@ -29,7 +29,7 @@ function putCookie(key, value)
 
 angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
-.factory('userFactory', ['$http', function($http)
+.factory('userFactory', ['$http', '$window', function($http, $window) //Added $window by Artem to route back to the homepage
 {
 	var sessionUser = {
 		firstname: 'default_first_name',
@@ -56,6 +56,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 				var name = data.toString();
 				name = name.replace(/['"]+/g, "");
 				alert("Welcome back, " + name + "!");
+				$window.location.href = '/'; //Redirects back to the main page
 			}
 		});		
 	
@@ -90,7 +91,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 		if (isNaN(dateChecker))
 		{
-			alert("Biirth date is invalid");
+			alert("Birth date is invalid");
 			return;
 		}
 
@@ -119,6 +120,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 				putCookie("username", userObj.username);
 				putCookie("password", userObj.password);
+				$window.location.href = '/'; // Redirects back to the home page
 			}
 		});
 	}

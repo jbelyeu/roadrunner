@@ -23,10 +23,11 @@ router.get('/', function(req, res, next)
 //GET account page
 router.get('/Account', function(req, res, next) 
 {
-	if (req.cookies)
-		res.render('account', { title: 'Express' });
-	else
+	console.log(req.cookies.username == undefined);
+	if (req.cookies.username == undefined)
 		res.render('login', { title: 'Express' });
+	else
+		res.render('account', { title: 'Express' });
 });
 
 //GET signup page
