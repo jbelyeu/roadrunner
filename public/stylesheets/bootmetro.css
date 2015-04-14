@@ -10136,6 +10136,25 @@ input[type=radio]:checked + label:before {
 	display: inline;
 	padding: 0 1.5em 0 0;
 }
+
+.left-account {
+//	border-right: 1px solid #ebebeb; 
+	float: left; 
+	width: 45%; 
+	height: 100%;
+	margin-left: 20px; 
+	margin-right: 30px;
+}
+
+.right-account{
+	width: 45%; 
+	height: 100%;
+	float: right; 
+	margin-left: 20px; 
+	margin-right: 20px; 
+	overflow: hidden;
+}
+
 /*
 Changes to be made .. ___apul___ fault
 
