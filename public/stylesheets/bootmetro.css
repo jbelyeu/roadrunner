@@ -10155,6 +10155,16 @@ input[type=radio]:checked + label:before {
 	overflow: hidden;
 }
 
+.errormsg {
+  margin: .5em 0 0;
+  display: inline;
+  color: #dd4b39;
+  line-height: 12px;
+  font-size: 11px;
+}
+
+
+
 /*
 Changes to be made .. ___apul___ fault
 

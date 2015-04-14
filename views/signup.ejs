@@ -26,21 +26,6 @@
 	<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
 	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
-	<style type="text/css">
-		.errormsg 
-		{
-			margin: .5em 0 0;
-			display: block;
-			color: #dd4b39;
-			line-height: 13px;
-		}
-	</style>
-
-	<script type="text/javascript">
-		var inputEmptyErrorMessage = 'You can\x27t leave this empty.';
-		//take care of the alerts through functions that refer to spans in html
-	</script>
-
 </head>
 <body ng-app='rrWebsiteApp' style="overflow-x: scroll; overflow-y: scroll;" >
 	<div class="wrapper">
@@ -53,27 +38,31 @@
 							<h3 style="margin-left: 24%; padding-top: 20px; padding-bottom: 20px;" class="dark-grey">Registration</h3>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Name</label>
-								<input type="text" name="first_name" id="first_name" style="margin-right: 2px;" placeholder="First" ng-model="first_name"</input>
-								<input type="text" name="last_name" id="last_name" placeholder="Last" ng-model="last_name"></input>
+								<input type="text" name="first_name" id="FirstName" onkeyup="errorCheck(id)" onfocus="errorCheck(id)" style="margin-right: 2px;" placeholder="First" ng-model="first_name"</input>
+								<input type="text" name="last_name" id="LastName" onkeyup="errorCheck(id)" onfocus="errorCheck(id)" placeholder="Last" ng-model="last_name"></input>
+								<span role="alert" class="errormsg" id="errormsg_0_Name"></span>
 							</div>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Username</label>
-								<input type="text" style='width: 72%' name="username" id="username" placeholder="Username" ng-model="username"></input>
+								<input type="text" style='width: 72%' name="username" id="Username" onkeyup="errorCheck(id)" onclick="errorCheck(id)" placeholder="Username" ng-model="username"></input>
+								<span role="alert" class="errormsg" id="errormsg_0_Username"></span>
 							</div>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Password</label>
 								<input type='password' name="password" id='password' style="margin-right: 2px;" placeholder='Password' ng-model="password"></input>
-								<input type='password' name="password_repeat" id='password_repeat' placeholder='Repeat Password' ng-model="password_repeat"></input>
+								<input type='password' name="password_repeat" id='password_repeat' onkeyup="checkPasswords(password, password_repeat)" placeholder='Repeat Password' ng-model="password_repeat"></input>
+								<span role="alert" class="errormsg" id="errormsg_0_Passwords"></span>
 							</div>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Email Address</label>
-								<input type="text" name="email" id="email" style="width: 72%;" ng-model="email" placeholder="Email Address"></input>
+								<input type="text" name="email" id="Email" onkeyup="errorCheck(id)" onclick="errorCheck(id)" style="width: 72%;" ng-model="email" placeholder="Email Address"></input>
+								<span role="alert" class="errormsg" id="errormsg_0_Email"></span>
 							</div>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Birthday</label>
 								<fieldset style="width: 73%">
 									<span id="BirthMonthHolder">
-										<select class="styled-select slate" style="width: 47%;" ng-model="birth_month" id="birth_month">
+										<select class="styled-select slate" style="width: 47%;" ng-model="birth_month" id="BirthMonth" onkeyup="errorCheck(id)" onclick="errorCheck(id)">
 											<option value="">Month</option>
 											<option value="01" >January</option>
 											<option value="02" >February</option>
@@ -89,18 +78,19 @@
 											<option value="12" >December</option>
 										</select>
 									</span>
-									<input type="text" style="width: 20%" maxlength="2" id="birth_day" ng-model="birth_day" placeholder="Day"></input>
-									<input type="text" style="width: 30%" maxlength="4" id="birth_year" ng-model="birth_year" placeholder="Year"></input>
+									<input type="text" style="width: 20%" maxlength="2" id="BirthDay" onkeyup="errorCheck(id)" onclick="errorCheck(id)" ng-model="birth_day" placeholder="Day"></input>
+									<input type="text" style="width: 30%" maxlength="4" id="BirthYear" onkeyup="errorCheck(id)" onclick="errorCheck(id)" ng-model="birth_year" placeholder="Year"></input>
 								</fieldset>
+								<span role="alert" class="errormsg" id="errormsg_0_Birth"></span>
 							</div>
 							<div style="margin-bottom: 1%" class="form-group col-lg-12">
 								<label class="ng-binding">Gender</label>
-								<select class="styled-select slate" style="width: 72%" ng-model="gender" name="Gender" id="Gender">
+								<select class="styled-select slate" style="width: 72%" ng-model="gender" name="Gender" id="Gender" onkeyup="errorCheck(id)" onclick="errorCheck(id)">
 									<option value="">I am...</option>
 									<option value="FEMALE">Female</option>
 									<option value="MALE">Male</option>
 								</select>
-		<!--								<span role="alert" class="errormsg" id="errornsg_0_Gender"></span> -->
+								<span role="alert" class="errormsg" id="errormsg_0_Gender"></span>
 							</div>
 							<div style="margin-top: 35px; width: 72%">
 								<div style="text-align: center;">
@@ -122,5 +112,34 @@
 			<li>Artem Golotin</li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		var inputEmptyErrorMessage = 'You can\x27t leave this empty.';
+		var passwordsDontMatch = 'Passwords don\x27t match';
+		var passwordsMatch = '<strong>Passwords match!</strong>';
+
+		function checkPasswords(pass1, pass2) {
+			this.error = document.getElementById('errormsg_0_Passwords');
+			if (pass1.value != pass2.value) {
+				this.error.innerHTML = passwordsDontMatch;
+			}
+			else {
+				this.error.style.color = "green";
+				this.error.innerHTML = passwordsMatch;
+			}
+		}
+
+		function errorCheck(id) {
+			var val =  document.getElementById(id).value;
+			if (id.indexOf("Name") > -1) id = "Name";
+			if (id.indexOf("Birth") > -1) id = "Birth";
+			this.error = document.getElementById('errormsg_0_' + id);
+			if (val.length == 0) {
+				this.error.innerHTML = inputEmptyErrorMessage;
+			}
+			else {
+				this.error.innerHTML = "";
+			}
+		};
+	</script>
 </body>
 </html>

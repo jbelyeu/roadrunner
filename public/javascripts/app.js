@@ -120,6 +120,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 				putCookie("username", userObj.username);
 				putCookie("password", userObj.password);
+
 				$window.location.href = '/'; // Redirects back to the home page
 			}
 		});
