@@ -1,9 +1,6 @@
 function getCookie(key)
 {
-	console.log(document.cookie);
 	cookies = document.cookie.split(';');
-	console.log("cookies " + key);
-	console.log(cookies);
 	for (var i = 0; i < cookies.length; ++i)
 	{
 		var cookie = cookies[i];
@@ -35,7 +32,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		firstname: 'default_first_name',
 		lastname: 'default_last_name',
 		username: 'default_username',
-		password: 'default_password'
+		password: 'default_password',
+		birthdate: ''
 	};
 
 	sessionUser.validate = function(userData)
@@ -60,6 +58,32 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			}
 		});		
 	
+	};
+
+	sessionUser.getUserData = function(callback)
+	{
+		var username = getCookie("username");
+		var password = getCookie("password");
+
+		if (typeof username == "undefined" ||
+			typeof password == "undefined" )
+		{
+			username = prompt("It appears that your session has expired. " +
+					"Please enter your username and password to load. " );
+
+			if ( username == null || username == "<username>")
+			{
+				return; //if they don't input a username, we don't prompt for a password
+			}
+			password = prompt("Password", "<password>");
+		}
+
+		var params = {
+			username: username,
+			password: password
+		};
+
+		$http.post('/GetUserData/', params).success(callback);
 	};
 
 	sessionUser.saveNewUser = function (first_name, last_name, username, 
@@ -132,13 +156,12 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 .factory('mainFactory', ['$http', function($http)
 {
 	var route = {
+		routes: [],
+		route: {}
 	};
 
 	route.save = function(routeObj)
 	{
-		console.log("routeObj");
-		console.log(routeObj);
-	
 		var username = getCookie("username");
 		var password = getCookie("password");
 
@@ -158,7 +181,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		routeObj.username = username;
 		routeObj.password = password;
 
-		$.ajax({
+		$.ajax(
+		{
 			type: "POST",
 			url: 'http://52.10.242.23/saveRoute/',
 			data: routeObj,
@@ -179,8 +203,9 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		}
 	}
 
-	route.loadRoutes = function(routename)
+	route.loadRoutes = function(routename, callback)
 	{
+		console.log("in loadRoutes: routename: " + routename);
 		var username = getCookie("username");
 		var password = getCookie("password");
 
@@ -188,7 +213,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			typeof password == "undefined" )
 		{
 			username = prompt("Enter your username and password to load route. " + 
-					"To avoid this message, log in before saving", "<username>");
+					"To avoid this message, log in before loading", "<username>");
 
 			if ( username == null || username == "<username>")
 			{
@@ -203,12 +228,38 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		}
 
 		var url = '/getRoutes/' + username + '/' + password + '/' + routename;
-		
-		$http.get(url).success(function(data)
+	
+		if (routename == 'null')
 		{
-			console.log(data);
-		});
+			return $http.get(url).success(function(data)
+			{
+				var routenames = [];
+				for (var i = 0; i < data.length; ++i)
+				{
+					routenames.push(data[i].routename);
+				}
+				angular.copy(routenames, route.routes);
+			});
+		}
+		else
+		{
+			console.log("in else");
+			console.log(callback);
+			
+			$.ajax(
+			{
+				type: "GET",
+				url: 'http://52.10.242.23' + url,
+				success: success
+			});
+
+			function success(data)
+			{
+				callback(data);
+			}
+		}	
 	}
+
 	return route;
 }])
 
@@ -246,26 +297,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		$urlRouterProvider.otherwise('home');
 	}
 ])
-
-// This is the controller defined by Artem
-.controller('AccCtrl', ['$scope', function($scope) {
-	$scope.name = "Hayden Smith";
-	$scope.age = 24;
-	routes = {'Route1':3.5, 
-		'Route2':4.3, 
-		'Route3':4.4, 
-		'Route4':3.9, 
-		'Route5':4.3,
-		'Route6':5.1,
-		'Route7':4.4};
-	
-	$scope.routes = routes;
-
-	$scope.routeClick = function(name) {
-		console.log(name);
-		//This passes the name of the route correctly
-	}
-}])
 
 .controller('LoginCtrl',
 [
@@ -336,6 +367,11 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 	'mainFactory', 
 	function ($rootScope, $scope, $stateParams, mainFactory)
 	{
+		$scope.route = 'unset';
+		$scope.latitude = 'unset';
+		$scope.longitude = 'unset';
+		
+
 		$scope.saveRoute = function(route, latitude, longitude)
 		{
 			var routename = prompt("Please enter a name for your route", "<name>");
@@ -360,36 +396,52 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 
 		$scope.loadRoute = function()
 		{
-			var routename = 'another fine route';
+			var routename = getCookie("chosenroute");
 			routename = routename.replace(/ /g, '_');
-			console.log("routename: " + routename);
-			mainFactory.loadRoutes(routename );
+
+			mainFactory.loadRoutes(routename, function(data)
+			{
+				$scope.route = data[0].route;
+				$scope.latitude = data[0].latitude;
+				$scope.longitude = data[0].longitude;
+			});
+
 		};
 
 	}
 ])
 
-//.controller('AccCtrl', 
-//[
-//	'$rootScope',
-//	'$scope',
-//	'$stateParams',
-//	'mainFactory', 
-//	'userFactory',
-//	function ($rootScope, $scope, $stateParams, mainFactory, userFactory)
-//	{
-//		$scope.load = function()
-//		{
-//			
-//		};
-//
-//		$scope.saveChanges = function(userdata)
-//		{
-//			userFactory.saveNewUser($scope.first_name, $scope.last_name,
-//				$scope.username, $scope.password, $scope.password_repeat, 
-//				$scope.email, $scope.birth_day, $scope.birth_month, 
-//				$scope.birth_year, $scope.gender);
-//		};
-//
-//	}
-//]);
+// This is the controller defined by Artem
+.controller('AccCtrl',
+[
+	'$scope', 
+	'mainFactory', 
+	'userFactory',
+	function($scope, mainFactory, userFactory) 
+	{
+		mainFactory.loadRoutes();
+		$scope.routes = mainFactory.routes;
+		userFactory.getUserData( function (data)
+		{
+			$scope.name = data.firstname + " " + data.lastname;
+			var today = new Date();
+			var birthdate = new Date(data.birthdate);
+			
+			var age = today.getFullYear() - birthdate.getFullYear();
+			if (today.getMonth() < birthdate.getMonth - 1)
+			{
+				age --;
+			}
+			if (birthdate.getMonth -1 == today.getMonth() && today.getDay() < birthdate.getDay())
+			{
+				age--;
+			}
+			$scope.age = age;
+		});
+		
+		$scope.routeClick = function(position) 
+		{			
+			var routename = mainFactory.routes[position];
+			putCookie("chosenroute", routename);
+		}
+}])

@@ -287,9 +287,26 @@
 		});
 
 		$(document).ready(function(){
-			console.log("firing");
-       	
+		
+			if (document.cookie.indexOf('chosenroute') != -1)
+			{
+				var scope = angular.element( $( "#scopeElement" ) ) .scope();
+				scope.loadRoute();
+
+				document.cookie = "chosenroute=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; //deletes the cookie
+				route = scope.route;
+				gps_lat = scope.latitude;
+				gps_lng = scope.longitude;
+				
+				console.log(scope);
+				console.log(route);
+				console.log(gps_lat);
+				console.log(gps_lng);
+
+//				calculateRoute();
+       		}
 		});
+
 	</script>
 
 
@@ -377,8 +394,6 @@
 
 	<div class='row-fluid' style="width: 90%; margin-left: 30px; margin-right:10%; margin-top: 25px;"> <!-- might need to add an ng-model -->
 		<div class='pull-left BG-Color' style="width: 312px; height: 650px; text-align:center;" ng-app="rrWebSite" ng-controller="MainCtrl">
-			
-
 
 			<div style="margin:10px;"><img src='/images/RoadRunner.png'></img></div><br>
 
@@ -406,10 +421,10 @@
 			<form>
 				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
 				<button id='logout' onclick="signOut()" type="submit">Sign Out</button>
-				<button id='logout' ng-click="loadRoute()" type="submit">Load route</button>
-				<!-- Jon!!!! Why those 2 buttons have the same ID? -->
+				<button ng-click="loadRoute()" type="submit">Load route</button>
 
 			</form>
+
 
 			<!--Custom Map Elements-->
     			<div id="search-panel">
@@ -426,6 +441,10 @@
 
 		</div>
 		<div id='map-canvas' class='pull-left RSS_feed BG-Color' style="width: 900px; height: 650px;"></div>
+
+		<form ng-app="rrWebSite" ng-controller="MainCtrl"> 
+			<input id="scopeElement" type="hidden" ></input>
+		</form>
 	</div>
 	<!-- New footer --> 
 	<div class="push"></div>

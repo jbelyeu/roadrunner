@@ -128,7 +128,7 @@ router.post('/Signup', function(req, res, next)
 	});
 });
 
-//GET validate user
+//POST validate user
 router.post('/validate', function(req, res, next) 
 {
 	console.log("in users validate POST method");
@@ -162,6 +162,51 @@ router.post('/validate', function(req, res, next)
 					{
 						console.log("valid user");
 						res.json(itemArray[0].first_name);
+					}
+					else
+					{
+						console.log("invalid user");
+						res.json('Validation Failed: User invalid');
+					}
+				});
+			});
+		});
+	});
+});
+
+//POST get user data
+router.post('/GetUserData', function(req, res, next) 
+{
+	console.log("in users getUserData POST method");
+	console.log(req.body);
+	var pass = req.body.password;
+	var uname = req.body.username;
+	
+	var mongoClient = require("mongodb").MongoClient;
+	mongoClient.connect('mongodb://localhost/roadrunner', function(err, db)
+	{
+		if (err) {throw err;}
+		
+		db.collection("users", function (err, users)
+		{
+			console.log("in call to db: " + pass);
+			if (err) {throw err;}
+			
+			users.find({password: pass, username: uname}, function (err, items)
+			{
+				if (err) {throw err;}
+				items.toArray(function (err, itemArray)
+				{
+					console.log("validating user");
+					console.log(itemArray);
+
+					if (err) {throw err;}
+					if (itemArray.length > 0)
+					{
+						console.log("valid user");
+						res.json({firstname: itemArray[0].first_name, 
+									lastname: itemArray[0].last_name,
+									birthdate: itemArray[0].birthdate});
 					}
 					else
 					{
