@@ -291,19 +291,17 @@
 			if (document.cookie.indexOf('chosenroute') != -1)
 			{
 				var scope = angular.element( $( "#scopeElement" ) ) .scope();
-				scope.loadRoute();
+				var info = scope.loadRoute();
 
 				document.cookie = "chosenroute=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; //deletes the cookie
-				route = scope.route;
-				gps_lat = scope.latitude;
-				gps_lng = scope.longitude;
+				route = info.route;
+				gps_lat = info.latitude;
+				gps_lng = info.longitude;
 				
-				console.log(scope);
+				console.log("route from load request");
 				console.log(route);
-				console.log(gps_lat);
-				console.log(gps_lng);
 
-//				calculateRoute();
+				calculateRoute();
        		}
 		});
 

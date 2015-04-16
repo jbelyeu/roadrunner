@@ -203,9 +203,8 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		}
 	}
 
-	route.loadRoutes = function(routename, callback)
+	route.loadRoutes = function(routename)
 	{
-		console.log("in loadRoutes: routename: " + routename);
 		var username = getCookie("username");
 		var password = getCookie("password");
 
@@ -243,20 +242,12 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		}
 		else
 		{
-			console.log("in else");
-			console.log(callback);
-			
-			$.ajax(
-			{
-				type: "GET",
-				url: 'http://52.10.242.23' + url,
-				success: success
-			});
+			var xmlHttp = null;
 
-			function success(data)
-			{
-				callback(data);
-			}
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("GET", 'http://52.10.242.23' + url, false);
+			xmlHttp.send(null);
+			return xmlHttp.responseText;
 		}	
 	}
 
@@ -399,13 +390,16 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			var routename = getCookie("chosenroute");
 			routename = routename.replace(/ /g, '_');
 
-			mainFactory.loadRoutes(routename, function(data)
-			{
-				$scope.route = data[0].route;
-				$scope.latitude = data[0].latitude;
-				$scope.longitude = data[0].longitude;
-			});
+			var data = mainFactory.loadRoutes(routename);
+			var info = eval ( "(" + data  + ")" );
 
+			var parsedData = {
+				route: info[0].route,
+				latitude: info[0].latitude,
+				longitude: info[0].longitude,
+			}
+
+			return parsedData;
 		};
 
 	}
