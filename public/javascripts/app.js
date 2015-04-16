@@ -1,5 +1,9 @@
 function getCookie(key)
 {
+	if (document.cookie.indexOf(key) == -1)
+	{
+		return;
+	}
 	cookies = document.cookie.split(';');
 	for (var i = 0; i < cookies.length; ++i)
 	{
@@ -388,6 +392,17 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		$scope.loadRoute = function()
 		{
 			var routename = getCookie("chosenroute");
+			console.log("fish");
+			console.log(routename);
+			if (typeof routename == "undefined")
+			{
+				routename = prompt("Please enter name of desired route or go to Account page to load route");
+				if (routename == null) //still didn't choose one
+				{
+					return;
+				}
+			}
+			alert(routename);
 			routename = routename.replace(/ /g, '_');
 
 			var data = mainFactory.loadRoutes(routename);

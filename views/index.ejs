@@ -305,6 +305,21 @@
        		}
 		});
 
+		function getRoute()
+		{
+			var scope = angular.element( $( "#scopeElement" ) ) .scope();
+			var info = scope.loadRoute();
+			document.cookie = "chosenroute=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; //deletes the cookie
+			route = info.route;
+			gps_lat = info.latitude;
+			gps_lng = info.longitude;
+				
+			console.log("route from load request");
+			console.log(route);
+
+			calculateRoute();
+		}
+
 	</script>
 
 
@@ -419,7 +434,7 @@
 			<form>
 				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
 				<button id='logout' onclick="signOut()" type="submit">Sign Out</button>
-				<button ng-click="loadRoute()" type="submit">Load route</button>
+				<button onclick="getRoute()" type="submit">Load route</button>
 
 			</form>
 
