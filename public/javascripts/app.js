@@ -252,7 +252,7 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 			var host = window.location.hostname;
 
 			xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("GET", 'http://' + host + '/' + url, false);
+			xmlHttp.open("GET", 'http://' + host + url, false);
 			xmlHttp.send(null);
 			return xmlHttp.responseText;
 		}	
