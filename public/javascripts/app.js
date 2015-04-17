@@ -402,7 +402,6 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 					return;
 				}
 			}
-			alert(routename);
 			routename = routename.replace(/ /g, '_');
 
 			var data = mainFactory.loadRoutes(routename);
