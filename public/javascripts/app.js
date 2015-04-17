@@ -184,11 +184,13 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		}
 		routeObj.username = username;
 		routeObj.password = password;
+		var host = window.location.hostname;
 
 		$.ajax(
 		{
 			type: "POST",
-			url: 'http://52.10.242.23/saveRoute/',
+			dateType: 'jsonp',
+			url: 'http://' + host + '/saveRoute/',
 			data: routeObj,
 			success: success
 		});
