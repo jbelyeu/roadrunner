@@ -249,9 +249,10 @@ angular.module('rrWebsiteApp',['ui.router', 'ngResource'])
 		else
 		{
 			var xmlHttp = null;
+			var host = window.location.hostname;
 
 			xmlHttp = new XMLHttpRequest();
-			xmlHttp.open("GET", 'http://52.10.242.23' + url, false);
+			xmlHttp.open("GET", 'http://' + host + '/' + url, false);
 			xmlHttp.send(null);
 			return xmlHttp.responseText;
 		}	
