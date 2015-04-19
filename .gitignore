@@ -3,3 +3,4 @@ server.crt
 server.csr
 server.pem
 ssl	
+server.log
