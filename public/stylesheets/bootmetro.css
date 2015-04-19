@@ -10140,19 +10140,19 @@ input[type=radio]:checked + label:before {
 .left-account {
 //	border-right: 1px solid #ebebeb; 
 	float: left; 
-	width: 45%; 
+	width: 22%; 
 	height: 100%;
 	margin-left: 20px; 
 	margin-right: 30px;
 }
 
 .right-account{
-	width: 45%; 
+	width: 70%; 
 	height: 100%;
-	float: right; 
+	min-height: 400px;
+	float: left; 
 	margin-left: 20px; 
 	margin-right: 20px; 
-	overflow: hidden;
 }
 
 .errormsg {
