@@ -289,11 +289,16 @@ console.log(directionsService);
 			});
 		});
 
+		// Checks to see if there's a cookie with a set route
+		// 	and loads it after main page is rendered
 		$(document).ready(function(){
-//			var body = document.getElementById('body');
-//			body.onload = function() {
-//				setTimeout("getRoute", 6000);
-//			});
+			setTimeout(function() {
+				if (document.cookie.indexOf("chosenroute") > -1) {
+					getRoute(); 
+				}
+			}, 4000);
+		});
+//		$(document).ready(function(){
 	/*		var directionsDisplay;
 			var directionsService;
 			var route_result = null;
@@ -318,8 +323,8 @@ console.log(directionsService);
                 });
 
        		}
-*/
 		});
+*/
 
 		function getRoute()
 		{
@@ -460,7 +465,7 @@ console.log(directionsService);
 			<form>
 				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
 				<button id='logout' style="display: inline" onclick="signOut()" type="submit">Sign Out</button>
-				<button onclick="getRoute()" type="submit">Load route</button>
+				<button id='getroute' onclick="getRoute()" type="submit">Load route</button>
 
 			</form>
 
@@ -482,7 +487,7 @@ console.log(directionsService);
 		<div id='map-canvas' class='pull-left RSS_feed BG-Color' style="width: 900px; height: 650px;"></div>
 
 		<form ng-app="rrWebSite" ng-controller="MainCtrl"> 
-				<input id="scopeElement" type="hidden" ></input>
+			<input id="scopeElement" type="hidden" ></input>
 		</form>
 	</div>
 	<!-- New footer --> 
@@ -496,5 +501,5 @@ console.log(directionsService);
 		<li>Artem Golotin</li>
 	</ul>
 </div>
-</body>
-</html>
+	</body>
+	</html>
