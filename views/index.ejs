@@ -54,6 +54,8 @@
 		{
 			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 			document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+			//Hide button on event
+			document.getElementById('logout').style.display = 'none';
 		}
 
 		function geoFindMe() {
@@ -288,6 +290,10 @@ console.log(directionsService);
 		});
 
 		$(document).ready(function(){
+//			var body = document.getElementById('body');
+//			body.onload = function() {
+//				setTimeout("getRoute", 6000);
+//			});
 	/*		var directionsDisplay;
 			var directionsService;
 			var route_result = null;
@@ -327,6 +333,18 @@ console.log(directionsService);
 			newLocation(gps_lat, gps_lng);
 			calculateRoute();
 		}
+
+		// Hide / show logout button
+		$(document).ready(function() {
+			var cookie = document.cookie;
+			var logout = document.getElementById('logout');
+			if (cookie) {
+				logout.style.display = "inline";
+			}
+			else {
+				logout.style.display = "none";
+			}
+		});
 
 	</script>
 
@@ -374,10 +392,10 @@ console.log(directionsService);
 </style>
 
 
-<body ng-app="rrWebsiteApp" style="width: 1366px; overflow-x: scroll; overflow-y: scroll;">
+<body id='body' ng-app="rrWebsiteApp" style="width: 1366px; overflow-x: scroll; overflow-y: scroll;">
 <div class="wrapper">
 	<div class="row-fluid" id='header' style="height: 120px;">
-		<div class='logo' style="margin-left: 10%; margin-right: 10%;"></div>
+		<a href="/"><div class='logo' style="margin-left: 10%; margin-right: 10%;"></div></a>
 		<div class='pull-right' style="margin-left: 10%; margin-right: 10%;">
 			<ul id="menu" class="nav nav-pills ng-scope" style="margin-top: 0px; 
 				text-align: right; margin-right: -15px;">
@@ -441,7 +459,7 @@ console.log(directionsService);
 
 			<form>
 				<button id='save_route' onclick="saveSubmit()" type="submit">Save Route</button>
-				<button id='logout' onclick="signOut()" type="submit">Sign Out</button>
+				<button id='logout' style="display: inline" onclick="signOut()" type="submit">Sign Out</button>
 				<button onclick="getRoute()" type="submit">Load route</button>
 
 			</form>
@@ -464,7 +482,7 @@ console.log(directionsService);
 		<div id='map-canvas' class='pull-left RSS_feed BG-Color' style="width: 900px; height: 650px;"></div>
 
 		<form ng-app="rrWebSite" ng-controller="MainCtrl"> 
-			<input id="scopeElement" type="hidden" ></input>
+				<input id="scopeElement" type="hidden" ></input>
 		</form>
 	</div>
 	<!-- New footer --> 

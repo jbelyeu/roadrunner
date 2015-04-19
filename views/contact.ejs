@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Contact</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<link href='/images/R.png' rel='icon' type='image/ico' />
+	<link href="/stylesheets/font-awesome.css" rel="stylesheet" />
+	<link href="/stylesheets/main.css" rel="stylesheet"/>
+	<link href="/stylesheets/_bootmetro.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro-icons.css" rel="stylesheet"/>
+	<link href="/stylesheets/bootmetro-responsive.css" rel="stylesheet"/>
+	<link href="/stylesheets/registration.css" rel="stylesheet"/>
+	<link href="/stylesheets/rrweb.css" rel="stylesheet"/>
+
+	<script src="/javascripts/modernizr-2.6.2-respond-1.1.0.js"></script>
+	<script src="/javascripts/angular.js"></script>
+	<script src="/javascripts/angular-resource.js"></script>
+	<script src="/javascripts/app.js"></script>
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSejHP90G9tGv8sXgrQXM-JbbWlKPqsAw"></script>
+
+	<script>
+	function initialize() {
+		  var mapProp = {
+			center: { lat: 40.24520534785715, lng: -111.64924621582031 },
+			zoom:14,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
+		};
+		  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+		  var marker = new google.maps.Marker({
+			position: { lat: 40.24520534785715, lng: -111.64924621582031 },
+			map: map,
+		});
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body id='body' ng-app="rrWebsiteApp" style="width: 1366px; overflow-x: scroll; overflow-y: scroll;">
+<div class="wrapper">
+	<div class="row-fluid" id='header' style="height: 120px;">
+		<a href="/"><div class='logo' style="margin-left: 10%; margin-right: 10%;"></div></a>
+		<div class='pull-right' style="margin-left: 10%; margin-right: 10%;">
+			<ul id="menu" class="nav nav-pills ng-scope" style="margin-top: 0px; 
+				text-align: right; margin-right: -15px;">
+				<li ng-class="{active: routeIs('/')}">
+				<a href="/" target="_self" style="font-size: 18px; margin-left: -20px;" class="ng-binding">
+					Home</a>
+				</li>
+				<li ng-class="{active: routeIs('/Login')}">
+					<a href="/Account" target="_self" style="font-size: 18px; margin-left: -20px;" class="ng-binding">
+					Account</a>
+				</li>
+				<li ng-class="{active: routeIs('/AboutUs')}">
+					<a href="/AboutUs" target="_self" style="font-size: 18px; margin-left: -20px;" class="ng-binding">
+					AboutUs</a>
+				</li>
+				<li ng-class="{active: routeIs('/Contact')}">
+					<a href="/Contact" target="_self" style="font-size: 18px; margin-left: -20px;" class="ng-binding">
+					Contact</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="mainBox">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span12 IconHeader ">
+							<div class="row-fluid">
+								
+								<div class="span5 IconHeader">
+									<label style="float: left;">
+										<span class="light" style="font-size: 18px;">
+											<img src="/images/contact.png" /> Contributors
+										</span>
+									</label>
+								</div>
+								<div class="span7 IconHeader pull-right">
+									<label style="float: left;">
+										<span class="light" style="font-size: 18px;">
+											<img src="/images/location.png" /> Location
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span5">
+							<div class="span12 contact BG-Color2">
+								<div class="row-fluid BG-Color IconHeader">
+									<div class="span12 ">
+										<div class="row-fluid">
+											<div class="span4 padd">
+												<label class="pull-left">
+													<span style="font-size: 12px;">Name</span>
+												</label>
+											</div>
+											<div class="span4 padd">
+												<label class="pull-left">
+													<span style="font-size: 12px;">| Location</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="row-fluid ">
+										<div class="span12" id="ContactList" style="overflow: hidden; height: 360px;">
+											<div class="listview-item-body bgcolorblack1">
+												<div class="listview-item">
+													<span class="span4 listview-item-heading list-item light dotdot" 
+															style="margin-left: 05px; font-size: 13px; margin-bottom: 0px; overflow: hidden">Hayden Smith</span>
+													<label class="span4 listview-item-heading list-item dotdot1" 
+															style="margin-left: 15px; margin-bottom: 0px; margin-right: 5px; font-size: 13px; overflow: hidden">4134 LSB</label>
+												</div>
+											</div>
+											<div class="listview-item-body bgcolorblack1">
+												<div class="listview-item">
+													<span class="span4 listview-item-heading list-item light dotdot" 
+															style="margin-left: 05px; font-size: 13px; margin-bottom: 0px; overflow: hidden">Artem Golotin</span>
+													<label class="span4 listview-item-heading list-item dotdot1" 
+															style="margin-left: 15px; margin-bottom: 0px; margin-right: 5px; font-size: 13px; overflow: hidden">4134 LSB</label>
+												</div>
+											</div>
+											<div class="listview-item-body bgcolorblack1">
+												<div class="listview-item">
+													<span class="span4 listview-item-heading list-item light dotdot" 
+															style="margin-left: 05px; font-size: 13px; margin-bottom: 0px; overflow: hidden">Jonathan Belyeu</span>
+													<label class="span4 listview-item-heading list-item dotdot1" 
+															style="margin-left: 15px; margin-bottom: 0px; margin-right: 5px; font-size: 13px; overflow: hidden">4134 LSB</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					  	<div class="span7">
+							<div class="row-fluid">
+								<div class="span12 pull-right">
+									<div>
+										<label class="pull-left" style="width: 100%">
+											RoadRunner.net
+										</label>
+										<label class="pull-left dimgray" style="width: 100%">
+											Life Science Building <br />
+											Brigham Young University <br />
+											Provo, UT 84602
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="span5">
+							<div id="googleMap" style="border: 2px solid #708090; width: 442px; height: 327px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="push"></div>
+</div>
+<div class="footer">
+	<ul>
+		<li>RoadRunner.net</li>
+		<li>Hayden Smith</li>
+		<li>Jonathan Belyeu</li>
+		<li>Artem Golotin</li>
+	</ul>
+</div>
+</body>
+
+</html>

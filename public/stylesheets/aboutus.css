@@ -1,0 +1,32 @@
+.Hayden 
+{	
+	background-image: url(../images/Hayden.jpg);
+}
+
+.Artem
+{
+	background-image: url(../images/Artem.jpg);
+}
+
+.Jon
+{
+	background-image: url(../images/Jon.jpg);
+}
+
+.img {
+	border-radius: 25px;
+    border: 2px solid #808080;
+    position: relative;
+    float: left;
+    width: 305px;
+    height: 414px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+//img.resize
+//{
+//	width: 10%;
+//	height: auto;
+//}
