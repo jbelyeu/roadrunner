@@ -4,3 +4,4 @@ server.csr
 server.pem
 ssl	
 server.log
+npm-debug.log
