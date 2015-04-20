@@ -297,35 +297,8 @@ console.log(directionsService);
 				if (document.cookie.indexOf("chosenroute") > -1) {
 					getRoute(); 
 				}
-			}, 4000);
+			}, 1000);
 		});
-//		$(document).ready(function(){
-	/*		var directionsDisplay;
-			var directionsService;
-			var route_result = null;
-			var map;
-			google.maps.event.addDomListener(window, 'load', initialize);
-
-			if (document.cookie.indexOf('chosenroute') != -1)
-			{
-				var scope = angular.element( $( "#scopeElement" ) ) .scope();
-				var info = scope.loadRoute();
-
-				document.cookie = "chosenroute=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; //deletes the cookie
-				route = info.route;
-				gps_lat = info.latitude;
-				gps_lng = info.longitude;
-				
-				//newLocation(gps_lat, gps_lng);
-				calculateRoute();
-				map.setCenter({
-                        lat : gps_lat,
-                        lng : gps_lng
-                });
-
-       		}
-		});
-*/
 
 		function getRoute()
 		{
